@@ -1,6 +1,12 @@
+#symfony stuff
 /web/bundles/
 /app/bootstrap*
 /app/cache/*
 /app/logs/*
 /vendor/
 /app/config/parameters.ini
+
+#eclipse project files
+.buildpath
+.project
+.settings/
