@@ -1,9 +1,9 @@
-restoo
+= restoo = 
 
-=Development setup=
-*clone repository: git clone git@github.com:jochenhilgers/restoo.git
-*rename app/config/parameters.ini.dist to parameters.ini
-*install Vendor-Bundles: php bin/vendors install
-*setup your webserver, document-root: web/
-*check config and fix the mentioned problems: http://myhost/config.php
+== Development setup ==
+* clone repository: git clone git@github.com:jochenhilgers/restoo.git
+* rename app/config/parameters.ini.dist to parameters.ini
+* install Vendor-Bundles: php bin/vendors install
+* setup your webserver, document-root: web/
+* check config and fix the mentioned problems: http://myhost/config.php
 
