@@ -1,0 +1,16 @@
+{% extends "RestooMainBundle::layout.html.twig" %}
+
+{% block title "New Project" %}
+
+{% block content %}
+	<h2>New Project</h2>
+	
+	<form action="{{ path('projectNew') }}" method="post" {{ form_enctype(form) }}>
+    	{{ form_widget(form) }}
+
+    	<input type="submit" />
+	</form>
+	
+	
+
+{% endblock %}

@@ -4,11 +4,19 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>{% block title %}{% endblock %} - restoo</title>
 		<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+		<link href="{{ asset('bundles/restoomain/css/main.css') }}" rel="stylesheet" type="text/css" />
 	</head>
 	<body>
 	
 		<div id="header">
 			<h1><a href="{{ path('home') }}"><img src="{{ asset('bundles/restoomain/images/logo.png') }}"></a></h1>
+		</div>
+	
+		<div id="navigation">
+			<ul>
+				<li><a href="{{ path('home') }}">Home</a></li>
+				<li><a href="{{ path('projects') }}">Projects</a></li>
+			</ul>
 		</div>
 	
 		<div id="content">

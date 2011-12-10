@@ -1,0 +1,12 @@
+{% extends "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Project" %}
+
+{% block content %}
+	<h2>Project: {{project.name}} </h2>
+	
+	
+	<div>
+		<a href="{{ path('projectDelete', { 'id': project.id } ) }}">delete project</a>
+	</div>
+{% endblock %}

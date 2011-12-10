@@ -1,0 +1,33 @@
+{% extends "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Projects" %}
+
+{% block content %}
+	<h2>Projects</h2>
+	
+	
+	
+	<table>
+	<tr>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Project-Manager</th>
+	</tr>
+	{% for project in projects %}
+		<tr>
+			<td><a href="{{ path( 'projectShow', { 'id': project.id } ) }}">{{ project.alias }}</td>
+			<td>{{ project.name }}</td>
+			<td>{{ project.manager }}</td>
+			
+		</tr>
+	{% else %}	
+		<tr>
+			<td colspan="3">No projects found</td>
+		</tr>
+	{% endfor %}
+	
+	</table>
+	
+	<a href="{{ path( 'projectNew' ) }}">new project</a>
+
+{% endblock %}

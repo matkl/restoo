@@ -35,6 +35,21 @@ class User implements UserInterface /*implements Serializable*/
 	 */
 	protected $salt;
 	
+	/**
+	 * @ORM\Column(type="string", length=50)
+	 */
+	protected $firstname;
+	
+	/**
+	 * @ORM\Column(type="string", length=50)
+	 */
+	protected $lastname;
+	
+	/**
+	* @ORM\Column(type="string", length=100)
+	*/
+	protected $email;
+	
 	protected $roles = array();
 	
 	/**
@@ -125,4 +140,79 @@ class User implements UserInterface /*implements Serializable*/
 	{
 		
 	}
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    }
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string 
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string 
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    
+    public function __toString()
+    {
+    	return $this->firstname." ".$this->lastname;
+    }
 }
