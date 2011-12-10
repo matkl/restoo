@@ -1,0 +1,18 @@
+{% extends "RestooMainBundle::layoutAdmin.html.twig" %}
+
+{% block title "Login" %}
+
+{% block content %}
+<form action="{{ path('adminCreateUser') }}" method="post">
+  		<b>Create User:</b>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" />
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" />
+
+    <input type="submit" name="create" />
+</form>
+    
+    
+{% endblock %}
