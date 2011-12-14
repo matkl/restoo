@@ -2,7 +2,7 @@
 
 == Development setup ==
 * fork and clone repository
-* copy app/config/parameters.ini.dist to parameters.ini
+* copy app/config/parameters.ini.dist to parameters.ini and adjust params
 * install Vendor-Bundles: php bin/vendors install
 * setup your webserver, document-root: web/
 * check config and fix the mentioned problems: http://myhost/config.php
