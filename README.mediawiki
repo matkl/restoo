@@ -7,4 +7,6 @@
 * setup your webserver, document-root: web/
 * check config and fix the mentioned problems: http://myhost/config.php
 * install assets: $ php app/console assets:install web
+* create database: $ php app/console doctrine:database:create
+* create tables: $ php app/console doctrine:schema:create
 
