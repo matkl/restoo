@@ -10,3 +10,8 @@
 .buildpath
 .project
 .settings/
+
+# thorsten stuff
+/log/
+apache.conf
+/nbproject/
