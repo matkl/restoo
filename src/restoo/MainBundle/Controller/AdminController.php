@@ -31,10 +31,16 @@ class AdminController extends Controller
 		$request = $this->getRequest();
 		$username = $request->get('username');
 		$password = $request->get('password');
+                $firstname = $request->get('firstname');
+                $lastname = $request->get('lastname');
+                $email = $request->get('email');
 		
 		
 		$user = new User();
 		$user->setUsername( $username );
+                $user->setFirstname( $firstname );
+                $user->setLastname( $lastname );
+                $user->setEmail( $email );
 		
 		$factory = $this->get( 'security.encoder_factory' );
 		$encoder = $factory->getEncoder( $user );
