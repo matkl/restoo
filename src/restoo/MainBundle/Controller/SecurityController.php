@@ -33,18 +33,6 @@ class SecurityController extends Controller
 	}
 
 	/**
-	 * 
-	 * @Route( "/logout", name="logout" )
-	 * @Template()
-	 */
-        public function logoutAction()
-        {
-            $session = $this->getRequest()->getSession();
-            $session->clear();
-            return $this->redirect( $this->generateUrl( 'home' ) );
-        }
-	
-	/**
 	 *
 	 * @Route( "/login-check", name="loginCheck" )
 	 * @Template()
