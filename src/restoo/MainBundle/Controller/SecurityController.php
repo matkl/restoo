@@ -31,6 +31,18 @@ class SecurityController extends Controller
 			'last_username' => $session->get( SecurityContext::LAST_USERNAME )
 		);
 	}
+
+	/**
+	 * 
+	 * @Route( "/logout", name="logout" )
+	 * @Template()
+	 */
+        public function logoutAction()
+        {
+            $session = $this->getRequest()->getSession();
+            $session->clear();
+            return $this->redirect( $this->generateUrl( 'home' ) );
+        }
 	
 	/**
 	 *
