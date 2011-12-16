@@ -23,16 +23,13 @@
 			<div class="grid_16">
 				<ul class="nav main">
 					<li>
-						<a href="{{ path('jobs') }}">Jobs</a>
+						<a href="{{ path('jobs') }}">Job</a>
 						<ul>
 							<li>
-								<a href="{{ path('home') }}">B</a>
+								<a href="{{ path('jobs') }}">Overview</a>
 							</li>
 							<li>
-								<a href="{{ path('home') }}">C</a>
-							</li>
-							<li>
-								<a href="{{ path('home') }}">D</a>
+								<a href="{{ path('jobNew') }}">New</a>
 							</li>
 						</ul>
 					</li>
@@ -65,13 +62,21 @@
 						</ul>
 					</li>
 					<li class="secondary">
-						Hello, <strong>#USER#</strong> [logout]
+						{% if app.user %} 
+							welcome <strong>{{ app.user.firstname }}</strong> 
+						{% endif %}
+					
+						{% if app.user %} 
+						 	<a href="{{ path('logout') }}">logout</a>
+						{% else %}
+						<a href="{{ path('login') }}">login</a>
+						{% endif %}
 					</li>
 				</ul>
 			</div>
 			<div class="clear"></div>
 			<div class="grid_16">
-				<h2 id="page-heading">Unsere tolle Subline</h2>
+				<h2 id="page-heading">{% block subheadline %}{% endblock %}</h2>
 			</div>
 			<div class="clear"></div>
 			<div class="grid_4">

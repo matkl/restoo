@@ -1,12 +1,9 @@
 {% extends "RestooMainBundle::layout.html.twig" %}
 
-{% block title "Jobs" %}
+{% block title "Job Overview" %}
+{% block subheadline "Job Overview" %}
 
 {% block content %}
-	<h2>Job</h2>
-	
-	
-	
 	<table>
 	<tr>
 		<th>Alias</th>
@@ -27,7 +24,5 @@
 	{% endfor %}
 	
 	</table>
-	
-	<a href="{{ path( 'jobNew' ) }}">new job</a>
 
 {% endblock %}

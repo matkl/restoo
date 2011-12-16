@@ -53,7 +53,7 @@ class Job
 	
 	/**
 	 * @Gedmo\Timestampable(on="create")
-	 * @ORM\Column(type="date")
+	 * @ORM\Column(type="datetime")
 	 */
 	private $created;
 	
@@ -62,7 +62,6 @@ class Job
 	 * @Gedmo\Timestampable(on="update")
 	 */
 	private $updated;
-	
 
     /**
      * Get id
@@ -157,7 +156,7 @@ class Job
     /**
      * Set created
      *
-     * @param date $created
+     * @param datetime $created
      */
     public function setCreated($created)
     {
@@ -167,7 +166,7 @@ class Job
     /**
      * Get created
      *
-     * @return date 
+     * @return datetime 
      */
     public function getCreated()
     {
