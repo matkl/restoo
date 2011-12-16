@@ -2,9 +2,9 @@
 
 namespace restoo\MainBundle\Controller;
 
-use restoo\MainBundle\Form\Type\ProjectType;
+use restoo\MainBundle\Form\JobType;
 
-use restoo\MainBundle\Entity\Project;
+use restoo\MainBundle\Entity\Job;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -12,55 +12,54 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * 
- * @author jochen
  */
-class ProjectController extends Controller
+class JobController extends Controller
 {
 	/**
-	 * @Route("/projects", name="projects")
+	 * @Route("/jobs", name="jobs")
 	 * @Template()
 	 */
 	public function listAction()
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		$projects = $em->getRepository('RestooMainBundle:Project')->findAll();
+		$jobs = $em->getRepository('RestooMainBundle:Job')->findAll();
 		
 		return array(
-			"projects" => $projects
+			"jobs" => $jobs
 		);
 	}
 	
 	/**
-	 * @Route("/project/show/{id}", name="projectShow")
+	 * @Route("/job/view/{id}", name="jobShow")
 	 * @Template() 
 	 */
 	public function showAction( $id )
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		$project = $em->getRepository('RestooMainBundle:Project')->find( $id );
+		$job = $em->getRepository('RestooMainBundle:Job')->find( $id );
 		
 		return array(
-			'project' => $project
+			'job' => $job
 		);
 	}
 	
 	/**
-	 * @Route("/project/delete{id}", name="projectDelete")
+	 * @Route("/job/delete/{id}", name="jobDelete")
 	 * @Template();
 	 */
 	public function deleteAction( $id )
 	{
 		$em = $this->getDoctrine()->getEntityManager();
-		$project = $em->getRepository('RestooMainBundle:Project')->find( $id );
+		$job = $em->getRepository('RestooMainBundle:Job')->find( $id );
 		
-		$em->remove( $project );
+		$em->remove( $job );
 		$em->flush();
 		
-		return $this->redirect( $this->generateUrl( 'projects' ) );
+		return $this->redirect( $this->generateUrl( 'jobs' ) );
 	}
 	
 	/**
-	* @Route("/project/new", name="projectNew")
+	* @Route("/job/new", name="jobNew")
 	* @Template()
 	*/
 	public function newAction()
@@ -68,10 +67,10 @@ class ProjectController extends Controller
 		$request = $this->getRequest();
 		$user = $this->get('security.context')->getToken()->getUser();
 		
-		$project = new Project();
-		$project->setManager( $user );
+		$job = new Job();
+		$job->setReporter( $user );
 		
-		$form = $this->createForm(new ProjectType(), $project);
+		$form = $this->createForm(new JobType(), $job);
 		
 		if ($request->getMethod() == 'POST') {
 			
@@ -80,10 +79,10 @@ class ProjectController extends Controller
 			if ($form->isValid()){
 
 				$em = $this->getDoctrine()->getEntityManager();
-				$em->persist( $project );
+				$em->persist( $job );
 				$em->flush();
 		
-				return $this->redirect( $this->generateUrl( 'projects' ) );
+				return $this->redirect( $this->generateUrl( 'jobs' ) );
 			}
 		}
 		

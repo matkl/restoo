@@ -1,11 +1,11 @@
 {% extends "RestooMainBundle::layout.html.twig" %}
 
-{% block title "New Project" %}
+{% block title "New Job" %}
 
 {% block content %}
-	<h2>New Project</h2>
+	<h2>New Job</h2>
 	
-	<form action="{{ path('projectNew') }}" method="post" {{ form_enctype(form) }}>
+	<form action="{{ path('jobNew') }}" method="post" {{ form_enctype(form) }}>
     	{{ form_widget(form) }}
 
     	<input type="submit" />

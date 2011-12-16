@@ -1,0 +1,33 @@
+{% extends "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Jobs" %}
+
+{% block content %}
+	<h2>Job</h2>
+	
+	
+	
+	<table>
+	<tr>
+		<th>Alias</th>
+		<th>Title</th>
+		<th>Reporter</th>
+	</tr>
+	{% for job in jobs %}
+		<tr>
+			<td><a href="{{ path( 'jobShow', { 'id': job.id } ) }}">{{ job.alias }}</td>
+			<td>{{ job.title }}</td>
+			<td>{{ job.reporter }}</td>
+			
+		</tr>
+	{% else %}	
+		<tr>
+			<td colspan="3">No jobs found</td>
+		</tr>
+	{% endfor %}
+	
+	</table>
+	
+	<a href="{{ path( 'jobNew' ) }}">new job</a>
+
+{% endblock %}
