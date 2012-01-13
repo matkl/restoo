@@ -1,0 +1,20 @@
+{% extends "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Administration: Edit User" %}
+{% block subheadline "Administration: Edit User" %}
+
+{% block submenu %}
+	{% include 'RestooMainBundle:Admin:submenuUser.html.twig' %}
+{% endblock %}
+
+{% block content %}
+	<form action="{{ path('admin_edit_user', { 'id': user.id } ) }}" method="post" >
+	    {{ form_widget(form) }}
+	
+	    <input type="submit" />
+	</form>    
+{% endblock %}
+
+{% block sidebar %}
+	###HELP###
+{% endblock %}	

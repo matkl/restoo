@@ -1,28 +1,33 @@
 {% extends "RestooMainBundle::layout.html.twig" %}
 
 {% block title "Administration: User" %}
+{% block subheadline "Administration: User" %}
+
+{% block submenu %}
+	{% include 'RestooMainBundle:Admin:submenuUser.html.twig' %}
+{% endblock %}
 
 {% block content %}
-<form action="{{ path('adminCreateUser') }}" method="post">
-  		<b>Create User:</b>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" />
-
-    <label for="firstname">Firstname:</label>
-    <input type="text" id="firstname" name="firstname" />
-
-    <label for="lastname">Lastname:</label>
-    <input type="text" id="lastname" name="lastname" />
-
-    <label for="email">E-Mail:</label>
-    <input type="text" id="email" name="email" />
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" />
-
-
-    <input type="submit" name="create" />
-</form>
-    
-    
+	<table>
+		<tr>
+			<th>Username</th>
+			<th>Name</th>
+			<th>E-Mail</th>
+			<th>Roles</th>
+			<th>Actions</th>
+		</tr>
+	{% for user in users %}
+		<tr>
+			<td>{{ user.username }}</td>
+			<td>{{ user.lastname }}, {{ user.firstname }}</td>
+			<td>{{ user.email }}</td>
+			<td>##TODO##</td>
+			<td><a href="{{ path( 'admin_edit_user', { 'id': user.id } ) }}">edit</a> <a href="#">delete</a></td>
+		</tr>
+	{% endfor %}
+	</table>
 {% endblock %}
+
+{% block sidebar %}
+	###ADD FILTER###
+{% endblock %}	
