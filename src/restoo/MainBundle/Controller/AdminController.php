@@ -23,6 +23,16 @@ class AdminController extends Controller
 	
 	/**
 	 * 
+	 * @Route( "/admin/user", name="admin_user" )
+	 * @Template()
+	 */
+	public function userAction()
+	{
+		return array();
+	}
+	
+	/**
+	 * 
 	 * @Route( "/admin/create-user", name="adminCreateUser" )
 	 * @Template()
 	 */
@@ -51,7 +61,7 @@ class AdminController extends Controller
 		$em->persist( $user );
 		$em->flush();
 		
-		return $this->redirect( $this->generateUrl( 'admin' ) );
+		return $this->redirect( $this->generateUrl( 'admin_user' ) );
 	}
 	
 }

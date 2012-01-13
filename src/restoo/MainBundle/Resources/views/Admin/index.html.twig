@@ -1,28 +1,8 @@
-{% extends "RestooMainBundle::layoutAdmin.html.twig" %}
+{% extends "RestooMainBundle::layout.html.twig" %}
 
-{% block title "Login" %}
+{% block title "Adminstration" %}
+{% block subheadline "Administration" %}
 
 {% block content %}
-<form action="{{ path('adminCreateUser') }}" method="post">
-  		<b>Create User:</b>
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" />
-
-    <label for="firstname">Firstname:</label>
-    <input type="text" id="firstname" name="firstname" />
-
-    <label for="lastname">Lastname:</label>
-    <input type="text" id="lastname" name="lastname" />
-
-    <label for="email">E-Mail:</label>
-    <input type="text" id="email" name="email" />
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" />
-
-
-    <input type="submit" name="create" />
-</form>
-    
     
 {% endblock %}
