@@ -30,7 +30,7 @@ class JobController extends Controller
 	}
 	
 	/**
-	 * @Route("/job/view/{id}", name="jobShow")
+	 * @Route("/job/view/{id}", name="job_show")
 	 * @Template() 
 	 */
 	public function showAction( $id )
@@ -44,7 +44,7 @@ class JobController extends Controller
 	}
 	
 	/**
-	 * @Route("/job/delete/{id}", name="jobDelete")
+	 * @Route("/job/delete/{id}", name="job_delete")
 	 * @Template();
 	 */
 	public function deleteAction( $id )
@@ -59,7 +59,7 @@ class JobController extends Controller
 	}
 	
 	/**
-	* @Route("/job/new", name="jobNew")
+	* @Route("/job/new", name="job_new")
 	* @Template()
 	*/
 	public function newAction()

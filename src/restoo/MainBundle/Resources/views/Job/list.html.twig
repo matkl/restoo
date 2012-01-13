@@ -12,7 +12,7 @@
 	</tr>
 	{% for job in jobs %}
 		<tr>
-			<td><a href="{{ path( 'jobShow', { 'id': job.id } ) }}">{{ job.alias }}</td>
+			<td><a href="{{ path( 'job_show', { 'id': job.id } ) }}">{{ job.alias }}</td>
 			<td>{{ job.title }}</td>
 			<td>{{ job.reporter }}</td>
 			
