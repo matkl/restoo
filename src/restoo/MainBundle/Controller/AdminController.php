@@ -1,6 +1,6 @@
 <?php
 //@todo try to combine new/edit-action for user
-//@todo add delete action
+//@todo add confirmation-dialog for user deletion
 
 namespace restoo\MainBundle\Controller;
 
@@ -115,6 +115,26 @@ class AdminController extends Controller
 		return array( 
 			'form' => $form->createView(),
 		);
+	}
+	
+	/**
+	 * @todo add description
+	 *
+	 * @Route( "/admin/delete-user/{id}", name="admin_delete_user" )
+	 * @Template()
+	*/	
+	public function deleteUserAction( $id )
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$user = $em->getRepository('RestooMainBundle:User')->find( $id );
+		
+		//@todo handle deletion of related jobs
+		if( $user != null )
+		{
+			$em->remove( $user );
+			$em->flush();
+		}
+		return $this->redirect( $this->generateUrl( 'admin_user' ) );
 	}
 	
 }

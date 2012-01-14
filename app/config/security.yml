@@ -17,9 +17,6 @@ security:
         login:
             pattern:  ^/login$
             security: false
-        admin:
-            pattern:  ^/admin
-            security: false
 
         secured_area:
             pattern:    ^/
