@@ -18,7 +18,19 @@ class DefaultController extends Controller
 	 */
 	public function indexAction()
 	{
-		return array();
+		/*$user = $this->get('security.context')->getToken()->getUser();
+		
+		$em = $this->getDoctrine()->getEntityManager();
+		$repo = $em->getRepository('RestooMainBundle:Job');
+		
+		$assignedJobs = $repo->findByReceiver( $user->getId() );
+		$createdJobs = $repo->findByReporter( $user->getId() );*/
+		
+		
+		return array( 
+				//'assignedJobs' => $assignedJobs,
+				//'createdJobs' => $createdJobs,
+		);
 	}
 	
 	/**

@@ -3,6 +3,6 @@ namespace restoo\MainBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
-class ProjectRepository extends EntityRepository
+class JobRepository extends EntityRepository
 {
 }

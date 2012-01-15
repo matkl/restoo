@@ -2,6 +2,10 @@
 
 {% block title "Job" %}
 
+{% block submenu %}
+	{% include 'RestooMainBundle:Job:submenu.html.twig' %}
+{% endblock %}
+
 {% block content %}
 	<h2>Job: {{job.alias}} | {{job.title}} </h2>
 	

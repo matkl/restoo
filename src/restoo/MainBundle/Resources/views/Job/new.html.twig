@@ -3,6 +3,10 @@
 {% block title "New Job" %}
 {% block subheadline "New Job" %}
 
+{% block submenu %}
+	{% include 'RestooMainBundle:Job:submenu.html.twig' %}
+{% endblock %}
+
 {% block content %}
 	
 	<form action="{{ path('job_new') }}" method="post">

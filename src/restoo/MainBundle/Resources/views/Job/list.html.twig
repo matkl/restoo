@@ -1,7 +1,11 @@
 {% extends "RestooMainBundle::layout.html.twig" %}
 
-{% block title "Job Overview" %}
-{% block subheadline "Job Overview" %}
+{% block title "Jobs" %}
+{% block subheadline "Jobs" %}
+
+{% block submenu %}
+	{% include 'RestooMainBundle:Job:submenu.html.twig' %}
+{% endblock %}
 
 {% block content %}
 	<table>
