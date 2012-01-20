@@ -8,9 +8,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * 
  * @ORM\Entity
- * @ORM\Table(name="job_packages")
+ * @ORM\Table(name="packages")
  */
-class JobPackage 
+class Package 
 {
 	const STATUS_CREATED = 'created';	
 	const STATUS_RELEASED = 'released';

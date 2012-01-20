@@ -21,7 +21,11 @@
 			<td>{{ user.username }}</td>
 			<td>{{ user.lastname }}, {{ user.firstname }}</td>
 			<td>{{ user.email }}</td>
-			<td>##TODO##</td>
+			<td>
+				{% for role in user.roles %}
+					{{ role }}<br />
+				{% endfor %}
+			</td>
 			<td>
 				<a href="{{ path( 'admin_edit_user', { 'id': user.id } ) }}">edit</a> 
 				<a href="{{ path( 'admin_delete_user', { 'id': user.id } ) }}">delete</a> 

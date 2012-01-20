@@ -2,6 +2,8 @@
 
 namespace restoo\MainBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -50,7 +52,15 @@ class User implements UserInterface /*implements Serializable*/
 	*/
 	protected $email;
 	
-	protected $roles = array();
+	/**
+	 * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
+	 */
+	protected $groups = array();
+	
+	public function __construct()
+	{
+		$this->groups = new ArrayCollection();
+	}
 	
 	/**
 	* Get id
@@ -104,16 +114,6 @@ class User implements UserInterface /*implements Serializable*/
 	public function setUsername( $username )
 	{
 		$this->username = $username;
-	}
-	
-	/**
-	 * Returns the roles granted to the user.
-	 *
-	 * @return Role[] The user roles
-	 */
-	public function getRoles()
-	{
-		return $this->roles;
 	}
 	
 	/**
@@ -211,8 +211,38 @@ class User implements UserInterface /*implements Serializable*/
         return $this->email;
     }
     
+    /**
+     * Returns the roles granted to the user.
+     *
+     * @return Role[] The user roles
+     */
+    public function getRoles()
+    {
+    	return $this->groups->toArray();
+    }
+    
     public function __toString()
     {
     	return $this->firstname." ".$this->lastname;
+    }
+
+    /**
+     * Get groups
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * Add groups
+     *
+     * @param restoo\MainBundle\Entity\Group $groups
+     */
+    public function addGroup(\restoo\MainBundle\Entity\Group $groups)
+    {
+        $this->groups[] = $groups;
     }
 }

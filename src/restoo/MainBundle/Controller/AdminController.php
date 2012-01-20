@@ -9,12 +9,10 @@ use restoo\MainBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 use restoo\MainBundle\Entity\User;
 
 /**
  * Controller for admin-actions
- * 
  * @author jochen
  */
 class AdminController extends Controller
