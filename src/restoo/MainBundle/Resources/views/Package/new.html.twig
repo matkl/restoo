@@ -4,9 +4,13 @@
 {% block subheadline "Packages" %}
 
 {% block submenu %}
-	{% include 'RestooMainBundle:JobPackage:submenu.html.twig' %}
+	{% include 'RestooMainBundle:Package:submenu.html.twig' %}
 {% endblock %}
 
 {% block content %}
+	<form action="{{ path('package_new') }}" method="post">
+    	{{ form_widget(form) }}
 
+    	<input type="submit" />
+	</form>
 {% endblock %}

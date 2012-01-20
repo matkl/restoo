@@ -21,34 +21,40 @@ class Package
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
-	private $id;
+	protected $id;
 	
 	/**
 	 * @ORM\Column(type="date")
 	 */
-	private $startDate;
+	protected $startDate;
 	
 	/**
 	 * @ORM\Column(type="date")
 	 */
-	private $endDate;
+	protected $endDate;
 	
 	/** 
 	 * @ORM\Column(type="string"); 
 	 */
-    private $status;
+    protected $status;
 	
+    /**
+    * @ORM\ManyToOne(targetEntity="User", inversedBy="packages")
+    * @ORM\JoinColumn(name="reporter_user_id", referencedColumnName="id")
+    */
+    protected $reporter;
+    
 	/**
 	 * @Gedmo\Timestampable(on="create")
 	 * @ORM\Column(type="datetime")
 	 */
-	private $created;
+	protected $created;
 	
 	/**
 	 * @ORM\Column(type="datetime")
 	 * @Gedmo\Timestampable(on="update")
 	 */
-	private $updated;
+	protected $updated;
 
     /**
      * Get id
@@ -166,5 +172,25 @@ class Package
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Set reporter
+     *
+     * @param restoo\MainBundle\Entity\User $reporter
+     */
+    public function setReporter(\restoo\MainBundle\Entity\User $reporter)
+    {
+        $this->reporter = $reporter;
+    }
+
+    /**
+     * Get reporter
+     *
+     * @return restoo\MainBundle\Entity\User 
+     */
+    public function getReporter()
+    {
+        return $this->reporter;
     }
 }

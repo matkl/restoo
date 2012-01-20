@@ -1,0 +1,30 @@
+{% extends "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Packages" %}
+{% block subheadline "Packages" %}
+
+{% block submenu %}
+	{% include 'RestooMainBundle:Package:submenu.html.twig' %}
+{% endblock %}
+
+{% block content %}
+<table>
+	<tr>
+		<th>Start Date</th>
+		<th>End Date</th>
+		<th>Created by</th>
+	</tr>
+	{% for package in packages %}
+		<tr>
+			<td>{{ package.startDate|date("d.m.Y") }}</td>
+			<td>{{ package.endDate|date("d.m.Y") }}</td>
+			<td>{{ package.reporter }}</td>
+		</tr>
+	{% else %}	
+		<tr>
+			<td colspan="3">No Packages found</td>
+		</tr>
+	{% endfor %}
+	
+	</table>
+{% endblock %}

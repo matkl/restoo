@@ -65,16 +65,19 @@ class JobController extends Controller
 	public function newAction()
 	{
 		$request = $this->getRequest();
-		$user = $this->get('security.context')->getToken()->getUser();
 		
-		$job = new Job();
-		$job->setReporter( $user );
-		
-		$form = $this->createForm(new JobType(), $job);
+		$form = $this->createForm(new JobType() );
 		
 		if ($request->getMethod() == 'POST') {
 			
 			$form->bindRequest($request);
+			
+			$job = new Job();
+			
+			$user = $this->get('security.context')->getToken()->getUser();
+
+			$job = $form->getData();
+			$job->setReporter( $user );
 			
 			if ($form->isValid()){
 
