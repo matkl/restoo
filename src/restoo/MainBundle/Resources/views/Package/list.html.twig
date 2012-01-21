@@ -13,16 +13,21 @@
 		<th>Start Date</th>
 		<th>End Date</th>
 		<th>Created by</th>
+		<th>Actions</th>
 	</tr>
 	{% for package in packages %}
 		<tr>
 			<td>{{ package.startDate|date("d.m.Y") }}</td>
 			<td>{{ package.endDate|date("d.m.Y") }}</td>
 			<td>{{ package.reporter }}</td>
+			<td>
+				<a href="{{ path('package_edit', { 'id': package.id }) }}">edit</a>
+				<a href="{{ path('package_delete', { 'id': package.id }) }}">delete</a>
+			</td>
 		</tr>
 	{% else %}	
 		<tr>
-			<td colspan="3">No Packages found</td>
+			<td colspan="4">No Packages found</td>
 		</tr>
 	{% endfor %}
 	
