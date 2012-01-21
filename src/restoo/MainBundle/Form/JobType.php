@@ -5,21 +5,25 @@ namespace restoo\MainBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
 
+/**
+ * Form-Type for the job entity.
+ * 
+ * @author jochen
+ */
 class JobType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm( FormBuilder $builder, array $options )
     {
         $builder
         	->add('alias')
 	        ->add('title')
     	    ->add('description')
         	->add('effort')
-        	->add('reporter')
         	->add('receiver')
         ;
     }
 
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions( array $options )
     {
     	return array(
                 'data_class' => 'restoo\MainBundle\Entity\Job',

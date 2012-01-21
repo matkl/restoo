@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * 
+ * @author jochen
  */
 class JobController extends Controller
 {
@@ -22,6 +23,7 @@ class JobController extends Controller
 	public function listAction()
 	{
 		$em = $this->getDoctrine()->getEntityManager();
+		//@todo filter by current user (or team)
 		$jobs = $em->getRepository('RestooMainBundle:Job')->findAll();
 		
 		return array(
@@ -44,6 +46,8 @@ class JobController extends Controller
 	}
 	
 	/**
+	 * Action for deleting a single job.
+	 * 
 	 * @Route("/job/delete/{id}", name="job_delete")
 	 * @Template();
 	 */
@@ -59,38 +63,57 @@ class JobController extends Controller
 	}
 	
 	/**
-	* @Route("/job/new", name="job_new")
-	* @Template()
-	*/
-	public function newAction()
+	 * 
+	 * @Route("/job/new", name="job_new")
+	 * @Route("/job/edit/{id}", name="job_edit")
+	 * @Template()
+	 */
+	public function editAction( $id = null )
 	{
-		$request = $this->getRequest();
-		
-		$form = $this->createForm(new JobType() );
-		
-		if ($request->getMethod() == 'POST') {
-			
-			$form->bindRequest($request);
-			
-			$job = new Job();
-			
-			$user = $this->get('security.context')->getToken()->getUser();
+		$em = $this->getDoctrine()->getEntityManager();
 
-			$job = $form->getData();
-			$job->setReporter( $user );
+		//edit an existing job
+		if( $id != null )
+		{
+			//@todo add error handling for unknown id
+			$job = $em->getRepository('RestooMainBundle:Job')->find( $id );
+			$formAction = $this->generateUrl( 'job_edit', array( 'id' => $id ) );
+		}
+		//create a new job
+		else
+		{
+			$job = null;
+			$formAction = $this->generateUrl( 'job_new' );
+		}
+		
+		$form = $this->createForm( new JobType(), $job );
+		
+		//save or update the job
+		if ($this->getRequest()->getMethod() == 'POST') 
+		{
 			
-			if ($form->isValid()){
+			$form->bindRequest( $this->getRequest() );
+			
+			//set default data for a new job
+			if( $job == null )
+			{
+				$user = $this->get('security.context')->getToken()->getUser();
+				$job = $form->getData();
+				$job->setReporter( $user );
+			}
+			
 
+			if ($form->isValid())
+			{
 				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist( $job );
 				$em->flush();
-		
-				return $this->redirect( $this->generateUrl( 'jobs' ) );
 			}
 		}
 		
 		return array(
-			'form' => $form->createView()
+			'form' => $form->createView(),
+			'formAction' => $formAction
 		);
 	}
 }

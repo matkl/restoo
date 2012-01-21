@@ -9,7 +9,7 @@
 
 {% block content %}
 	
-	<form action="{{ path('job_new') }}" method="post">
+	<form action="{{ formAction }}" method="post">
     	{{ form_widget(form) }}
 
     	<input type="submit" />
