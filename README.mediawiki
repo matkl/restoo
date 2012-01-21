@@ -11,8 +11,10 @@
 * create tables: $ php app/console doctrine:schema:create
 
 === User-Roles ===
- INSERT INTO groups (name,role) VALUES
- 	('user','ROLE_USER'),
- 	('admin','ROLE_ADMIN'),
- 	('project manager','ROLE_PM'),
- 	('team leader','ROLE_TL');
+<pre>
+INSERT INTO groups (name,role) VALUES
+	('user','ROLE_USER'),
+	('admin','ROLE_ADMIN'),
+	('project manager','ROLE_PM'),
+	('team leader','ROLE_TL');
+</pre>
