@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -48,14 +49,32 @@ class User implements UserInterface /*implements Serializable*/
 	protected $lastname;
 	
 	/**
-	* @ORM\Column(type="string", length=100)
-	*/
+	 * @ORM\Column(type="string", length=100)
+	 */
 	protected $email;
+	
+	/**
+	 * @ORM\ManyToOne(targetEntity="Team", inversedBy="members")
+	 * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
+	 */
+	protected $team;
 	
 	/**
 	 * @ORM\ManyToMany(targetEntity="Group", inversedBy="users")
 	 */
 	protected $groups = array();
+	
+	/**
+	 * @Gedmo\Timestampable(on="create")
+	 * @ORM\Column(type="datetime")
+	 */
+	protected $created;
+	
+	/**
+	 * @ORM\Column(type="datetime")
+	 * @Gedmo\Timestampable(on="update")
+	 */
+	protected $updated;
 	
 	public function __construct()
 	{
@@ -244,5 +263,65 @@ class User implements UserInterface /*implements Serializable*/
     public function addGroup(\restoo\MainBundle\Entity\Group $groups)
     {
         $this->groups[] = $groups;
+    }
+
+    /**
+     * Set created
+     *
+     * @param datetime $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * Get created
+     *
+     * @return datetime 
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param datetime $updated
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return datetime 
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * Set team
+     *
+     * @param restoo\MainBundle\Entity\Team $team
+     */
+    public function setTeam(\restoo\MainBundle\Entity\Team $team)
+    {
+        $this->team = $team;
+    }
+
+    /**
+     * Get team
+     *
+     * @return restoo\MainBundle\Entity\Team 
+     */
+    public function getTeam()
+    {
+        return $this->team;
     }
 }

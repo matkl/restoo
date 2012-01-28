@@ -1,0 +1,38 @@
+{% extends "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Administration: Teams" %}
+{% block subheadline "Administration: Teams" %}
+
+{% block submenu %}
+	{% include 'RestooMainBundle:Team:submenu.html.twig' %}
+{% endblock %}
+
+{% block content %}
+	<table>
+		<tr>
+			<th>Title</th>
+			<th>Team Leader</th>
+			<th>Members</th>
+			<th>Actions</th>
+		</tr>
+	{% for team in teams %}
+		<tr>
+			<td>{{ team.title }}</td>
+			<td>{{ team.leader }}</td>
+			<td>
+				{% for user in team.members %}
+					{{ user }}<br />
+				{% endfor %}
+			</td>
+			<td>
+				<a href="{{ path( 'admin_team_edit', { 'id': team.id } ) }}">edit</a> 
+				<a href="{{ path( 'admin_team_delete', { 'id': team.id } ) }}">delete</a> 
+			</td>
+		</tr>
+	{% endfor %}
+	</table>
+{% endblock %}
+
+{% block sidebar %}
+	###ADD FILTER###
+{% endblock %}	

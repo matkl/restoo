@@ -29,10 +29,10 @@ class AdminController extends Controller
 	/**
 	 * Shows a list with all users
 	 * 
-	 * @Route( "/admin/user", name="admin_user" )
+	 * @Route( "/admin/users", name="admin_users" )
 	 * @Template()
 	 */
-	public function userAction()
+	public function usersAction()
 	{
 		$users = $this->getDoctrine()
 				->getRepository('RestooMainBundle:User')
@@ -44,7 +44,7 @@ class AdminController extends Controller
 	/**
 	 * @todo add description
 	 * 
-	 * @Route( "/admin/edit-user/{id}", name="admin_edit_user" )
+	 * @Route( "/admin/user/edit/{id}", name="admin_user_edit" )
 	 * @Template()
 	 */
 	public function editUserAction( $id )
@@ -78,7 +78,7 @@ class AdminController extends Controller
 	/**
 	 * @todo add description
 	 * 
-	 * @Route( "/admin/new-user", name="admin_new_user" )
+	 * @Route( "/admin/user/new", name="admin_user_new" )
 	 * @Template()
 	 */
 	public function newUserAction()
@@ -104,7 +104,7 @@ class AdminController extends Controller
 				$em->persist( $user );
 				$em->flush();
 				
-				return $this->redirect( $this->generateUrl( 'admin_edit_user', 
+				return $this->redirect( $this->generateUrl( 'admin_user_edit', 
 						array( 'id' =>  $user->getId() ) 
 				) );
 			}
@@ -118,7 +118,7 @@ class AdminController extends Controller
 	/**
 	 * @todo add description
 	 *
-	 * @Route( "/admin/delete-user/{id}", name="admin_delete_user" )
+	 * @Route( "/admin/user/delete/{id}", name="admin_user_delete" )
 	 * @Template()
 	*/	
 	public function deleteUserAction( $id )
@@ -132,7 +132,7 @@ class AdminController extends Controller
 			$em->remove( $user );
 			$em->flush();
 		}
-		return $this->redirect( $this->generateUrl( 'admin_user' ) );
+		return $this->redirect( $this->generateUrl( 'admin_users' ) );
 	}
 	
 }

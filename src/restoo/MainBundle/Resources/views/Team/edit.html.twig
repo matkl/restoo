@@ -1,14 +1,14 @@
 {% extends "RestooMainBundle::layout.html.twig" %}
 
-{% block title "Administration: New User" %}
-{% block subheadline "Administration: New User" %}
+{% block title "Administration: Edit Team" %}
+{% block subheadline "Administration: Edit Team" %}
 
 {% block submenu %}
-	{% include 'RestooMainBundle:Admin:submenuUser.html.twig' %}
+	{% include 'RestooMainBundle:Team:submenu.html.twig' %}
 {% endblock %}
 
 {% block content %}
-	<form action="{{ path('admin_user_new') }}" method="post" >
+	<form action="" method="post" >
 	    {{ form_widget(form) }}
 	
 	    <input type="submit" />

@@ -39,9 +39,9 @@ class Package
     protected $status;
 	
     /**
-    * @ORM\ManyToOne(targetEntity="User", inversedBy="packages")
-    * @ORM\JoinColumn(name="reporter_user_id", referencedColumnName="id")
-    */
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="packages")
+     * @ORM\JoinColumn(name="reporter_user_id", referencedColumnName="id")
+     */
     protected $reporter;
     
 	/**

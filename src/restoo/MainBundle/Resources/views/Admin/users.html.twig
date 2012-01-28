@@ -13,6 +13,7 @@
 			<th>Username</th>
 			<th>Name</th>
 			<th>E-Mail</th>
+			<th>Team</th>
 			<th>Roles</th>
 			<th>Actions</th>
 		</tr>
@@ -21,14 +22,15 @@
 			<td>{{ user.username }}</td>
 			<td>{{ user.lastname }}, {{ user.firstname }}</td>
 			<td>{{ user.email }}</td>
+			<td>{{ user.team }}</td>
 			<td>
 				{% for role in user.roles %}
 					{{ role }}<br />
 				{% endfor %}
 			</td>
 			<td>
-				<a href="{{ path( 'admin_edit_user', { 'id': user.id } ) }}">edit</a> 
-				<a href="{{ path( 'admin_delete_user', { 'id': user.id } ) }}">delete</a> 
+				<a href="{{ path( 'admin_user_edit', { 'id': user.id } ) }}">edit</a> 
+				<a href="{{ path( 'admin_user_delete', { 'id': user.id } ) }}">delete</a> 
 			</td>
 		</tr>
 	{% endfor %}
