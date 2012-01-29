@@ -1,0 +1,25 @@
+{% extends "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Package creation" %}
+{% block subheadline "Package creation" %}
+
+{% block submenu %}
+	{% include 'RestooMainBundle:Package:submenu.html.twig' %}
+{% endblock %}
+
+{% block content %}
+<form action="{{ path('package_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('package') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

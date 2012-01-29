@@ -1,0 +1,59 @@
+{% extends "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Package show" %}
+{% block subheadline "Package show" %}
+
+{% block submenu %}
+	{% include 'RestooMainBundle:Package:submenu.html.twig' %}
+{% endblock %}
+
+{% block content %}
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Startdate</th>
+            <td>{{ entity.startDate|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Enddate</th>
+            <td>{{ entity.endDate|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ entity.status }}</td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ entity.created|date('Y-m-d H:i:s') }}</td>
+        </tr>
+        <tr>
+            <th>Updated</th>
+            <td>{{ entity.updated|date('Y-m-d H:i:s') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('package') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('package_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('package_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

@@ -16,7 +16,8 @@ class TeamType extends AbstractType
     {
         $builder
 	        ->add('title')
-	        ->add('leader');
+	        ->add('leader')
+	        ->add('members');
     }
 
     public function getName()

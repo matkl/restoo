@@ -1,16 +1,32 @@
 {% extends "RestooMainBundle::layout.html.twig" %}
 
-{% block title "Packages" %}
-{% block subheadline "Packages" %}
+{% block title "Package edit" %}
+{% block subheadline "Package edit" %}
 
 {% block submenu %}
 	{% include 'RestooMainBundle:Package:submenu.html.twig' %}
 {% endblock %}
 
 {% block content %}
-	<form action="{{ formAction }}" method="post">
-    	{{ form_widget(form) }}
 
-    	<input type="submit" />
-	</form>
+<form action="{{ path('package_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit">Edit</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('package') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('package_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
 {% endblock %}

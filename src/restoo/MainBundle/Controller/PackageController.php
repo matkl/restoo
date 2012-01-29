@@ -2,107 +2,201 @@
 
 namespace restoo\MainBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use restoo\MainBundle\Entity\Package;
 use restoo\MainBundle\Form\PackageType;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
 /**
- * Controller for managing packages.
- * 
- * @author jochen
+ * Package controller.
+ *
+ * @Route("/package")
  */
 class PackageController extends Controller
 {
-	/**
-	 * Action for listing all user packages.
-	 *  
-	 * @Route("/packages", name="packages")
-	 * @Template()
-	 */
-	public function listAction()
-	{
-		$user = $this->get('security.context')->getToken()->getUser();
-		$packages = $this->getDoctrine()
-				->getRepository('RestooMainBundle:Package')
-				->findByReporter( $user->getId() );
-		
-		return array(
-			"packages" => $packages
-		);
-	}
-	
-	/**
-	 * Action for deleting an existing package.
-	 * 
-	 * @Route( "/package/delete/{id}", name="package_delete" )
-	 * @Template()
-	 */
-	public function deleteAction( $id )
-	{
-		$em = $this->getDoctrine()->getEntityManager();
-		$package = $em->getRepository('RestooMainBundle:Package')->find( $id );
-		
-		$em->remove( $package );
-		$em->flush();
-		
-		return $this->redirect( $this->generateUrl( 'packages' ) );
-	}
-	
-	/**
-	 * action to update/create a package.
-	 * 
-	 * @Route( "/package/new", name="package_new" )
-	 * @Route( "/package/edit/{id}", name="package_edit" )
-	 * @Template()
-	 */
-	public function editAction( $id=null )
-	{
-		$em = $this->getDoctrine()->getEntityManager();
-		
-		//edit an existing package
-		if( $id != null ) 
-		{
-			//@todo add error handling for unknown id
-			$package = $em->getRepository('RestooMainBundle:Package')->find( $id );
-			$formAction = $this->generateUrl( 'package_edit', array('id'=>$id) );
-		}
-		//create a new package
-		else 
-		{
-			$package = null;
-			$formAction = $this->generateUrl( 'package_new' );
-		}
-		
-		$form = $this->createForm( new PackageType(), $package );
-		
-		//save or update the package
-		if ($this->getRequest()->getMethod() == 'POST') 
-		{
-			$form->bindRequest( $this->getRequest() );
+    /**
+     * Lists all Package entities.
+     *
+     * @Route("/", name="package")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
 
-			//set default data for a new package
-			if( $package == null )
-			{
-				$user = $this->get('security.context')->getToken()->getUser();
-				$package = $form->getData();
-				$package->setReporter( $user );
-				$package->setStatus( Package::STATUS_CREATED );
-			}
-			
-			if ($form->isValid())
-			{
-				$em = $this->getDoctrine()->getEntityManager();
-				$em->persist( $package );
-				$em->flush();
-			}
-		}
-		
-		return array(
-			'form' => $form->createView(),
-			'formAction' => $formAction,
-		);
-	}
+        $packages = $em->getRepository('RestooMainBundle:Package')->findAll();
+
+        return array('packages' => $packages);
+    }
+
+    /**
+     * Finds and displays a Package entity.
+     *
+     * @Route("/{id}/show", name="package_show")
+     * @Template()
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('RestooMainBundle:Package')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Package entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),        );
+    }
+
+    /**
+     * Displays a form to create a new Package entity.
+     *
+     * @Route("/new", name="package_new")
+     * @Template()
+     */
+    public function newAction()
+    {
+        $entity = new Package();
+        $form   = $this->createForm(new PackageType(), $entity);
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+    }
+
+    /**
+     * Creates a new Package entity.
+     *
+     * @Route("/create", name="package_create")
+     * @Method("post")
+     * @Template("RestooMainBundle:Package:new.html.twig")
+     */
+    public function createAction()
+    {
+        $entity  = new Package();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new PackageType(), $entity);
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('package_show', array('id' => $entity->getId())));
+            
+        }
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+    }
+
+    /**
+     * Displays a form to edit an existing Package entity.
+     *
+     * @Route("/{id}/edit", name="package_edit")
+     * @Template()
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('RestooMainBundle:Package')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Package entity.');
+        }
+
+        $editForm = $this->createForm(new PackageType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Edits an existing Package entity.
+     *
+     * @Route("/{id}/update", name="package_update")
+     * @Method("post")
+     * @Template("RestooMainBundle:Package:edit.html.twig")
+     */
+    public function updateAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('RestooMainBundle:Package')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Package entity.');
+        }
+
+        $editForm   = $this->createForm(new PackageType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        $request = $this->getRequest();
+
+        $editForm->bindRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('package_edit', array('id' => $id)));
+        }
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Package entity.
+     *
+     * @Route("/{id}/delete", name="package_delete")
+     * @Method("post")
+     */
+    public function deleteAction($id)
+    {
+        $form = $this->createDeleteForm($id);
+        $request = $this->getRequest();
+
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $entity = $em->getRepository('RestooMainBundle:Package')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Package entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('package'));
+    }
+
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+        ;
+    }
 }

@@ -264,6 +264,15 @@ class User implements UserInterface /*implements Serializable*/
     {
         $this->groups[] = $groups;
     }
+    
+	public function setGroups( ArrayCollection $groups )
+    {
+    	foreach( $groups as $group )
+    	{
+    		$group->addUser( $this );
+    		$this->addGroup( $group );
+    	}
+    }
 
     /**
      * Set created

@@ -52,6 +52,12 @@ class Job
 	protected $receiver;
 	
 	/**
+	 * @ORM\ManyToOne(targetEntity="Package", inversedBy="jobs")
+	 * @ORM\JoinColumn(name="package_id", referencedColumnName="id")
+	 */
+	protected $package;
+	
+	/**
 	 * @Gedmo\Timestampable(on="create")
 	 * @ORM\Column(type="datetime")
 	 */
@@ -231,5 +237,30 @@ class Job
     public function getReceiver()
     {
         return $this->receiver;
+    }
+    
+    public function __toString()
+    {
+    	return $this->getAlias().': '.$this->getTitle();
+    }
+
+    /**
+     * Set package
+     *
+     * @param restoo\MainBundle\Entity\Package $package
+     */
+    public function setPackage(\restoo\MainBundle\Entity\Package $package)
+    {
+        $this->package = $package;
+    }
+
+    /**
+     * Get package
+     *
+     * @return restoo\MainBundle\Entity\Package 
+     */
+    public function getPackage()
+    {
+        return $this->package;
     }
 }

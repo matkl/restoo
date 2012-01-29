@@ -22,7 +22,7 @@
 			<td>{{ package.reporter }}</td>
 			<td>
 				<a href="{{ path('package_edit', { 'id': package.id }) }}">edit</a>
-				<a href="{{ path('package_delete', { 'id': package.id }) }}">delete</a>
+				<a href="{{ path('package_show', { 'id': package.id }) }}">show</a>
 			</td>
 		</tr>
 	{% else %}	

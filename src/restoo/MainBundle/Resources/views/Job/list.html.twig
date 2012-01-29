@@ -14,6 +14,7 @@
 		<th>Title</th>
 		<th>Created by</th>
 		<th>Assigned to</th>
+		<th>Package</th>
 		<th>Actions</th>
 	</tr>
 	{% for job in jobs %}
@@ -22,6 +23,7 @@
 			<td>{{ job.title }}</td>
 			<td>{{ job.reporter }}</td>
 			<td>{{ job.receiver }}</td>
+			<td>{{ job.package }}</td>
 			<td>
 				<a href="{{ path('job_edit', { 'id': job.id }) }}">edit</a>
 				<a href="{{ path('job_delete', { 'id': job.id }) }}">delete</a>

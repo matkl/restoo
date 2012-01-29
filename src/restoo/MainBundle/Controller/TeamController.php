@@ -3,6 +3,8 @@
 namespace restoo\MainBundle\Controller;
 
 
+use restoo\MainBundle\Entity\Team;
+
 use restoo\MainBundle\Form\TeamType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -50,7 +52,7 @@ class TeamController extends Controller
 		//create a new team
 		else
 		{
-			$team = null;
+			$team = new Team();
 			$formAction = $this->generateUrl( 'admin_team_new' );
 		}
 	
@@ -61,7 +63,7 @@ class TeamController extends Controller
 		{
 				
 			$form->bindRequest( $this->getRequest() );
-			$team = $form->getData();
+			//$team = $form->getData();
 				
 			if ($form->isValid())
 			{

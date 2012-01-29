@@ -16,7 +16,7 @@ class UserType extends AbstractType
             ->add('email')
             ->add('password')
             ->add('groups')
-            ->add('team')
+            ->add('team', null, array( 'required'=>false) )
         ;
     }
 

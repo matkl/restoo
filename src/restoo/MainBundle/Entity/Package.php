@@ -2,6 +2,8 @@
 
 namespace restoo\MainBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -44,6 +46,11 @@ class Package
      */
     protected $reporter;
     
+    /**
+     * @ORM\OneToMany(targetEntity="Job", mappedBy="package")
+     */
+    protected $jobs;
+    
 	/**
 	 * @Gedmo\Timestampable(on="create")
 	 * @ORM\Column(type="datetime")
@@ -56,6 +63,14 @@ class Package
 	 */
 	protected $updated;
 
+	public function __construct()
+	{
+		$this->startDate = new \DateTime('Monday next week');
+		$this->endDate = new \DateTime('Friday next week');
+		$this->status = self::STATUS_CREATED;
+		$this->jobs = new ArrayCollection();
+	}
+	
     /**
      * Get id
      *
@@ -192,5 +207,25 @@ class Package
     public function getReporter()
     {
         return $this->reporter;
+    }
+    
+    /**
+     * Add jobs
+     *
+     * @param restoo\MainBundle\Entity\Job $jobs
+     */
+    public function addJob(\restoo\MainBundle\Entity\Job $jobs)
+    {
+        $this->jobs[] = $jobs;
+    }
+
+    /**
+     * Get jobs
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getJobs()
+    {
+        return $this->jobs;
     }
 }
