@@ -2,6 +2,8 @@
 
 namespace restoo\MainBundle\Entity;
 
+use Doctrine\ORM\PersistentCollection;
+
 use Doctrine\Common\Collections\ArrayCollection;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -26,6 +28,11 @@ class Package
 	protected $id;
 	
 	/**
+	 * @ORM\Column(type="string");
+	 */
+	protected $title;
+	
+	/**
 	 * @ORM\Column(type="date")
 	 */
 	protected $startDate;
@@ -47,7 +54,7 @@ class Package
     protected $reporter;
     
     /**
-     * @ORM\OneToMany(targetEntity="Job", mappedBy="package")
+     * @ORM\OneToMany(targetEntity="Job", mappedBy="package", cascade={"persist"} )
      */
     protected $jobs;
     
@@ -71,6 +78,15 @@ class Package
 		$this->jobs = new ArrayCollection();
 	}
 	
+	/**
+	 * 
+	 * return string
+	 */
+	public function __toString()
+	{
+		return $this->getTitle();
+	}
+    
     /**
      * Get id
      *
@@ -220,6 +236,21 @@ class Package
     }
 
     /**
+     * Set Jobs
+     * 
+     * @param PersistentCollection $jobs
+     */
+    public function setJobs( PersistentCollection $jobs )
+    {
+    	foreach( $jobs as $job )
+    	{
+    		$job->setPackage( $this );
+    		$job->setReporter( $this->getReporter() );
+    		$this->addJob( $job );
+    	}
+    }
+    
+    /**
      * Get jobs
      *
      * @return Doctrine\Common\Collections\Collection 
@@ -227,5 +258,35 @@ class Package
     public function getJobs()
     {
         return $this->jobs;
+    }
+    
+    public function getEffort()
+    {
+    	$sum = 0;
+    	foreach( $this->getJobs() as $job )
+    	{
+    		$sum += $job->getEffort();
+    	}
+    	return $sum;
+    }
+    
+    /**
+     * Set title
+     *
+     * @param string $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 }

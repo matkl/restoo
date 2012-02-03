@@ -62,11 +62,13 @@ class PackageController extends Controller
      */
     public function newAction()
     {
-        $entity = new Package();
-        $form   = $this->createForm(new PackageType(), $entity);
+    	
+        
+    	$package = new Package();
+        $form   = $this->createForm( new PackageType(), $package );
 
         return array(
-            'entity' => $entity,
+            'entity' => $package,
             'form'   => $form->createView()
         );
     }
@@ -80,22 +82,27 @@ class PackageController extends Controller
      */
     public function createAction()
     {
-        $entity  = new Package();
+    	$user = $this->get('security.context')->getToken()->getUser();
+        
+    	$package  = new Package();
+        $package->setReporter( $user );
+        
         $request = $this->getRequest();
-        $form    = $this->createForm(new PackageType(), $entity);
+        $form    = $this->createForm(new PackageType(), $package);
         $form->bindRequest($request);
 
         if ($form->isValid()) {
+        	
             $em = $this->getDoctrine()->getEntityManager();
-            $em->persist($entity);
+            $em->persist($package);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('package_show', array('id' => $entity->getId())));
+            return $this->redirect( $this->generateUrl('package_show', array('id' => $package->getId())));
             
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $package,
             'form'   => $form->createView()
         );
     }
@@ -150,7 +157,8 @@ class PackageController extends Controller
 
         $editForm->bindRequest($request);
 
-        if ($editForm->isValid()) {
+        if ($editForm->isValid()) 
+        {
             $em->persist($entity);
             $em->flush();
 

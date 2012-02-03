@@ -22,7 +22,7 @@ class UserType extends AbstractType
 
     public function getName()
     {
-        return 'restoo_mainbundle_usertype';
+        return 'user';
     }
     
     public function getDefaultOptions(array $options)

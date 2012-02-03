@@ -32,6 +32,6 @@ class JobType extends AbstractType
     
     public function getName()
     {
-        return 'restoo_mainbundle_jobtype';
+        return 'job';
     }
 }

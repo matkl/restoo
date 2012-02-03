@@ -22,7 +22,7 @@ class TeamType extends AbstractType
 
     public function getName()
     {
-        return 'restoo_mainbundle_teamtype';
+        return 'team';
     }
     
     public function getDefaultOptions( array $options )

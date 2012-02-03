@@ -69,6 +69,20 @@ class Job
 	 */
 	private $updated;
 
+	public function __construct()
+	{
+			
+	}
+	
+	/**
+	 * 
+	 * return string
+	 */	
+	public function __toString()
+	{
+		return $this->getAlias().': '.$this->getTitle();
+	}
+	
     /**
      * Get id
      *
@@ -237,11 +251,6 @@ class Job
     public function getReceiver()
     {
         return $this->receiver;
-    }
-    
-    public function __toString()
-    {
-    	return $this->getAlias().': '.$this->getTitle();
     }
 
     /**
