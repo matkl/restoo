@@ -54,7 +54,7 @@ class Package
     protected $reporter;
     
     /**
-     * @ORM\OneToMany(targetEntity="Job", mappedBy="package", cascade={"persist"} )
+     * @ORM\OneToMany(targetEntity="Job", mappedBy="package", cascade={"persist"}, orphanRemoval=true )
      */
     protected $jobs;
     

@@ -16,6 +16,7 @@ class PackageType extends AbstractType
         	->add('jobs', 'collection', array(	
         				'type' => new JobType(),
         				'allow_add' => true,
+        				'allow_delete' => true,
         				'by_reference' => false 
        		));
     }
