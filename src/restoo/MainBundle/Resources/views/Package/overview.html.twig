@@ -1,0 +1,85 @@
+<table>
+				<thead>
+					<tr>
+						<th colspan="4" class="table-head">In Work</th>
+					</tr>
+					<tr>
+						<th>Title</th>
+						<th>Period</th>
+						<th>Jobs (Effort)</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+		
+				<tbody>
+				{% for package in packages %}
+					<tr>
+						<td>{{ package.title }}</td>
+						<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
+						<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
+						<td>
+							<a href="">release</a> |
+							<a href="">delete</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr><td colspan="4">No packages found</td></tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			
+			<table>
+				<thead>
+					<tr>
+						<th colspan="4" class="table-head">Released</th>
+					</tr>
+					<tr>
+						<th>Title</th>
+						<th>Period</th>
+						<th>Jobs (Effort)</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+		
+				<tbody>
+				{% for package in packages %}
+					<tr>
+						<td>{{ package.title }}</td>
+						<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
+						<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
+						<td>
+						</td>
+					</tr>
+				{% else %}
+					<tr><td colspan="4">No packages found</td></tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			
+			<table>
+				<thead>
+					<tr>
+						<th colspan="4" class="table-head">Confirmed</th>
+					</tr>
+					<tr>
+						<th>Title</th>
+						<th>Period</th>
+						<th>Jobs (Effort)</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+		
+				<tbody>
+				{% for package in packages %}
+					<tr>
+						<td>{{ package.title }}</td>
+						<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
+						<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
+						<td>
+						</td>
+					</tr>
+				{% else %}
+					<tr><td colspan="4">No packages found</td></tr>
+				{% endfor %}
+				</tbody>
+			</table>

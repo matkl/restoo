@@ -2,6 +2,37 @@
 
 {% block title "Dashboard" %}
 
-{% block content %}
-	
+{% block subheadline "My Dashboard" %}
+
+{% block body %}
+
+<div class="grid_6">
+	<div class="box">
+		<h2><a href="#" id="toggle-jobs">My Received Jobs</a></h2>
+		<div id="jobs">Test</div>
+	</div>
+</div>
+<div class="grid_6">
+	<div class="box">
+		<h2><a href="#" id="toggle-packages">My Packages</a></h2>
+		<div id="packages" class="block">
+			{% render "RestooMainBundle:Package:overview" %}
+			
+			<a href="{{ path( 'package_new' ) }}">Create Package</a>
+		</div>
+	</div>
+</div>
+<div class="grid_4">
+	<div class="box">
+		<h2><a href="#" id="toggle-search">Search</a></h2>
+		<div class="block" id="search">
+			<form method="get" action="" class="search">
+				<p>
+					<input class="search text" name="value" type="text">
+					<input class="search button" value="Search" type="submit">
+				</p>
+			</form>
+		</div>
+	</div>
+</div>
 {% endblock %}

@@ -9,15 +9,26 @@
 
 {% block content %}
 <table>
-	<tr>
-		<th>Title</th>
-		<th>Start Date</th>
-		<th>End Date</th>
-		<th>Created by</th>
-		<th>Jobs (Effort)</th>
-		<th>Actions</th>
-	</tr>
+	<thead>
+		<tr>
+			<th colspan="6" class="table-head">Packages</th>
+		</tr>
+		<tr>
+			<th>Title</th>
+			<th>Start Date</th>
+			<th>End Date</th>
+			<th>Created by</th>
+			<th>Jobs (Effort)</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+	{% set totalHours = 0 %}
+	{% set totalJobs = 0 %}
 	{% for package in packages %}
+		{% set totalHours = totalHours + package.effort %}	
+		{% set totalJobs = totalJobs + package.jobs|length %}	
 		<tr>
 			<td>{{ package.title }}</td>
 			<td>{{ package.startDate|date("d.m.Y") }}</td>
@@ -34,6 +45,15 @@
 			<td colspan="6">No Packages found</td>
 		</tr>
 	{% endfor %}
+	</tbody>
 	
-	</table>
+	<tfoot>
+		<tr class="total">
+			<td colspan="4">Total</td>
+			<td>{{ totalJobs }} ({{ totalHours }}h)</td>
+			<td></td>
+		</tr>
+	</tfoot>
+	
+</table>
 {% endblock %}

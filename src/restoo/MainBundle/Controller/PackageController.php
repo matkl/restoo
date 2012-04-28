@@ -16,6 +16,20 @@ use restoo\MainBundle\Form\PackageType;
  */
 class PackageController extends Controller
 {
+	/**
+	 * @Route("/overview", name="package_overview")
+	 * @Template()
+	 */
+	public function overviewAction() {
+		
+		$user = $this->get('security.context')->getToken()->getUser();
+		$packageRep = $this->getDoctrine()->getRepository('RestooMainBundle:Package');
+		return array(
+			'packages' => $packageRep->findByReporter( $user->getId() )
+		);
+		
+	}
+	
     /**
      * Lists all Package entities.
      *

@@ -2,118 +2,201 @@
 
 namespace restoo\MainBundle\Controller;
 
-use restoo\MainBundle\Form\JobType;
-
-use restoo\MainBundle\Entity\Job;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use restoo\MainBundle\Entity\Job;
+use restoo\MainBundle\Form\JobType;
 
 /**
- * 
- * @author jochen
+ * Job controller.
+ *
+ * @Route("/job")
  */
 class JobController extends Controller
 {
-	/**
-	 * @Route("/jobs", name="jobs")
-	 * @Template()
-	 */
-	public function listAction()
-	{
-		$em = $this->getDoctrine()->getEntityManager();
-		//@todo filter by current user (or team)
-		$jobs = $em->getRepository('RestooMainBundle:Job')->findAll();
-		
-		return array(
-			"jobs" => $jobs
-		);
-	}
-	
-	/**
-	 * @Route("/job/view/{id}", name="job_show")
-	 * @Template() 
-	 */
-	public function showAction( $id )
-	{
-		$em = $this->getDoctrine()->getEntityManager();
-		$job = $em->getRepository('RestooMainBundle:Job')->find( $id );
-		
-		return array(
-			'job' => $job
-		);
-	}
-	
-	/**
-	 * Action for deleting a single job.
-	 * 
-	 * @Route("/job/delete/{id}", name="job_delete")
-	 * @Template();
-	 */
-	public function deleteAction( $id )
-	{
-		$em = $this->getDoctrine()->getEntityManager();
-		$job = $em->getRepository('RestooMainBundle:Job')->find( $id );
-		
-		$em->remove( $job );
-		$em->flush();
-		
-		return $this->redirect( $this->generateUrl( 'jobs' ) );
-	}
-	
-	/**
-	 * 
-	 * @Route("/job/new", name="job_new")
-	 * @Route("/job/edit/{id}", name="job_edit")
-	 * @Template()
-	 */
-	public function editAction( $id = null )
-	{
-		$em = $this->getDoctrine()->getEntityManager();
+    /**
+     * Lists all Job entities.
+     *
+     * @Route("/", name="job")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
 
-		//edit an existing job
-		if( $id != null )
-		{
-			//@todo add error handling for unknown id
-			$job = $em->getRepository('RestooMainBundle:Job')->find( $id );
-			$formAction = $this->generateUrl( 'job_edit', array( 'id' => $id ) );
-		}
-		//create a new job
-		else
-		{
-			$job = null;
-			$formAction = $this->generateUrl( 'job_new' );
-		}
-		
-		$form = $this->createForm( new JobType(), $job );
-		
-		//save or update the job
-		if ($this->getRequest()->getMethod() == 'POST') 
-		{
-			
-			$form->bindRequest( $this->getRequest() );
-			
-			//set default data for a new job
-			if( $job == null )
-			{
-				$user = $this->get('security.context')->getToken()->getUser();
-				$job = $form->getData();
-				$job->setReporter( $user );
-			}
-			
+        $entities = $em->getRepository('RestooMainBundle:Job')->findAll();
 
-			if ($form->isValid())
-			{
-				$em = $this->getDoctrine()->getEntityManager();
-				$em->persist( $job );
-				$em->flush();
-			}
-		}
-		
-		return array(
-			'form' => $form->createView(),
-			'formAction' => $formAction
-		);
-	}
+        return array('entities' => $entities);
+    }
+
+    /**
+     * Finds and displays a Job entity.
+     *
+     * @Route("/{id}/show", name="job_show")
+     * @Template()
+     */
+    public function showAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('RestooMainBundle:Job')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Job entity.');
+        }
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'delete_form' => $deleteForm->createView(),        );
+    }
+
+    /**
+     * Displays a form to create a new Job entity.
+     *
+     * @Route("/new", name="job_new")
+     * @Template()
+     */
+    public function newAction()
+    {
+        $entity = new Job();
+        $form   = $this->createForm(new JobType(), $entity);
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+    }
+
+    /**
+     * Creates a new Job entity.
+     *
+     * @Route("/create", name="job_create")
+     * @Method("post")
+     * @Template("RestooMainBundle:Job:new.html.twig")
+     */
+    public function createAction()
+    {
+        $entity  = new Job();
+        $request = $this->getRequest();
+        $form    = $this->createForm(new JobType(), $entity);
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('job_show', array('id' => $entity->getId())));
+            
+        }
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView()
+        );
+    }
+
+    /**
+     * Displays a form to edit an existing Job entity.
+     *
+     * @Route("/{id}/edit", name="job_edit")
+     * @Template()
+     */
+    public function editAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('RestooMainBundle:Job')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Job entity.');
+        }
+
+        $editForm = $this->createForm(new JobType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Edits an existing Job entity.
+     *
+     * @Route("/{id}/update", name="job_update")
+     * @Method("post")
+     * @Template("RestooMainBundle:Job:edit.html.twig")
+     */
+    public function updateAction($id)
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $entity = $em->getRepository('RestooMainBundle:Job')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Job entity.');
+        }
+
+        $editForm   = $this->createForm(new JobType(), $entity);
+        $deleteForm = $this->createDeleteForm($id);
+
+        $request = $this->getRequest();
+
+        $editForm->bindRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('job_edit', array('id' => $id)));
+        }
+
+        return array(
+            'entity'      => $entity,
+            'edit_form'   => $editForm->createView(),
+            'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Deletes a Job entity.
+     *
+     * @Route("/{id}/delete", name="job_delete")
+     * @Method("post")
+     */
+    public function deleteAction($id)
+    {
+        $form = $this->createDeleteForm($id);
+        $request = $this->getRequest();
+
+        $form->bindRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getEntityManager();
+            $entity = $em->getRepository('RestooMainBundle:Job')->find($id);
+
+            if (!$entity) {
+                throw $this->createNotFoundException('Unable to find Job entity.');
+            }
+
+            $em->remove($entity);
+            $em->flush();
+        }
+
+        return $this->redirect($this->generateUrl('job'));
+    }
+
+    private function createDeleteForm($id)
+    {
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
+        ;
+    }
 }

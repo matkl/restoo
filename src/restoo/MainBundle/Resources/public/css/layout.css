@@ -314,30 +314,21 @@ legend {
 	background:#fff;
 	border:1px solid #bbb;
 }
-fieldset.login p {
+fieldset p {
 	margin-bottom:1em;
 	margin-top:0pt;
 }
-fieldset p label {
-	width:98%;
-}
-fieldset p input {
-	width:98%;
-}
-fieldset p select {
-	width:99%;
-}
-fieldset.login p label {
+fieldset div label {
 	float:left;
 	line-height:2em;
 	margin-right:3%;
 	text-align:right;
 	width:32%;
 }
-fieldset.login p input {
+fieldset div input {
 	width:60%;
 }
-fieldset.login input.button {
+fieldset input.button {
 	margin-left:35%;
 }
 form p.notice {

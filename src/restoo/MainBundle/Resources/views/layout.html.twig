@@ -31,7 +31,7 @@
 						<a href="#">Resources</a>
 						<ul>
 							<li>
-								<a href="{{ path('jobs') }}">Jobs</a>
+								<a href="{{ path('job') }}">Jobs</a>
 							</li>
 							<li>
 								<a href="{{ path('package') }}">Packages</a>
@@ -65,10 +65,6 @@
 					</li>
 					<li class="secondary">
 						{% if app.user %} 
-							welcome <strong>{{ app.user.firstname }}</strong> 
-						{% endif %}
-					
-						{% if app.user %} 
 						 	<a href="{{ path('logout') }}">logout</a>
 						{% else %}
 						<a href="{{ path('login') }}">login</a>
@@ -77,25 +73,30 @@
 				</ul>
 			</div>
 			<div class="clear"></div>
+			
 			<div class="grid_16">
 				<h2 id="page-heading">{% block subheadline %}{% endblock %}</h2>
 			</div>
+			
 			<div class="clear"></div>
-			<div class="grid_3">
-				<div class="box menu">
-					{% block submenu %}
-					{% endblock %}	
+			{% block body %}
+				<div class="grid_4">
+					<div class="box menu">
+						{% block submenu %}
+						{% endblock %}	
+					</div>
 				</div>
-			</div>
-			<div class="grid_9">
-                    {% block content %}
-                    {% endblock %}	
-			</div>
-			<div class="grid_4">
-					{% block sidebar %}
-					{% endblock %}	
-			</div>
-			<div class="clear"></div>
+				<div class="grid_8">
+	                    {% block content %}
+	                    {% endblock %}	
+				</div>
+				<div class="grid_4">
+						{% block sidebar %}
+						{% endblock %}	
+				</div>
+			{% endblock %}
+				<div class="clear"></div>			
+			
 			<div class="grid_16" id="site_info">
 				<div class="box">
 					<p>Fluid 960 Grid System, created by <a href="http://www.domain7.com/WhoWeAre/StephenBau.html">Stephen Bau</a>, based on the <a href="http://960.gs/">960 Grid System</a> by <a href="http://sonspring.com/journal/960-grid-system">Nathan Smith</a>. Released under the 

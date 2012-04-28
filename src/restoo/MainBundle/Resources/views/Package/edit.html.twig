@@ -9,25 +9,55 @@
 
 {% block content %}
 
-<form action="{{ path('package_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-	<hr />
-	<ul class="record_actions">
-	    <li>
-	        <a href="{{ path('package') }}">Back to the list</a>
-	    </li>
-	    <li>
-	    	<a href="#" class="addElement">Add element</a>
-	    </li>
-	    <li>
-	        <form action="{{ path('package_delete', { 'id': entity.id }) }}" method="post">
-	            {{ form_widget(delete_form) }}
-	            <button type="submit">Delete</button>
-	        </form>
-	    </li>
-	    <li>
-	    	<button type="submit">Save</button>
-	    </li>
-	</ul>
-</form>
+<div class="box">
+	<h2><a href="#" id="toggle-forms">Edit Package</a></h2>
+	<div class="block" id="forms">
+	
+		<form action="{{ path('package_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+		    
+		    {{ form_errors(edit_form) }}
+		    <fieldset>
+		    	<legend>Properties</legend>
+		    	
+				{{ form_row(edit_form.title) }}
+	    		{{ form_row(edit_form.startDate) }}
+	    		{{ form_row(edit_form.endDate) }}
+
+		    </fieldset>
+		    <fieldset>
+		    	<legend>Jobs</legend>
+		    	
+		    	<div id="package_jobs" data-prototype="{{ form_widget(edit_form.jobs.get('prototype')) | e }}">
+		    	
+		    	{% for jobField in edit_form.jobs %}
+			        {{ form_errors(jobField) }}
+			        {{ form_widget(jobField) }}
+				{% endfor %}
+				
+		    	
+		    </fieldset>
+		    
+		    {{ form_row(edit_form._token) }}
+		    
+			<hr />
+			<ul class="record_actions">
+			    <li>
+			        <a href="{{ path('package') }}">Back to the list</a>
+			    </li>
+			    <li>
+			    	<a href="#" class="addElement">Add Job</a>
+			    </li>
+			    <li>
+			        <form action="{{ path('package_delete', { 'id': entity.id }) }}" method="post">
+			            {{ form_widget(delete_form) }}
+			            <button type="submit">Delete</button>
+			        </form>
+			    </li>
+			    <li>
+			    	<button type="submit">Save</button>
+			    </li>
+			</ul>
+		</form>
+	</div>
+</div>
 {% endblock %}

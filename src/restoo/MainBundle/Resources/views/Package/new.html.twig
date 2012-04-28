@@ -8,18 +8,16 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{ path('package_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('package') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+<div class="box">
+	<h2><a href="#" id="toggle-forms">Edit Package</a></h2>
+	<div class="block" id="forms">
+
+	<form action="{{ path('package_create') }}" method="post" {{ form_enctype(form) }}>
+		<fieldset>
+	    	{{ form_widget(form) }}
+	        <button class="" type="submit">Create</button>
+	    </fieldset>
+	</form>
+</div>
 {% endblock %}
