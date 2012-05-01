@@ -1,8 +1,6 @@
 $(document).ready( function(){
 	initializeEmbedForms();
-	
 });
-
 
 //---- js for embed forms-------------
 

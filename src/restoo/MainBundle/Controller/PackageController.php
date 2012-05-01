@@ -2,6 +2,8 @@
 
 namespace restoo\MainBundle\Controller;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -20,12 +22,27 @@ class PackageController extends Controller
 	 * @Route("/overview", name="package_overview")
 	 * @Template()
 	 */
-	public function overviewAction() {
+	public function overviewAction(){
 		
 		$user = $this->get('security.context')->getToken()->getUser();
-		$packageRep = $this->getDoctrine()->getRepository('RestooMainBundle:Package');
+		$packageRep = $this->getDoctrine()
+				->getRepository('RestooMainBundle:Package');
+		
+		$createdPackages = $packageRep->findBy( array( 
+					'reporter' => $user->getId(), 
+					'status' => Package::STATUS_CREATED ) );
+		$releasedPackages = $packageRep->findBy( array( 
+					'reporter' => $user->getId(), 
+					'status' => Package::STATUS_RELEASED ) );
+		$confirmedPackages = $packageRep->findBy( array( 
+					'reporter' => $user->getId(), 
+					'status' => Package::STATUS_CONFIRMED ) );
+		
+		
 		return array(
-			'packages' => $packageRep->findByReporter( $user->getId() )
+			'createdPackages' => $createdPackages, 
+			'releasedPackages' => $releasedPackages, 
+			'confirmedPackages' => $confirmedPackages, 
 		);
 		
 	}
@@ -36,8 +53,7 @@ class PackageController extends Controller
      * @Route("/", name="package")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction(){
         $em = $this->getDoctrine()->getEntityManager();
 
         $packages = $em->getRepository('RestooMainBundle:Package')->findAll();
@@ -46,13 +62,64 @@ class PackageController extends Controller
     }
 
     /**
+     * finds and releases a package
+     * 
+     * @param integer $id
+     * @throws NotFoundHttpException
+     * @Route("/{id}/release", name="package_release")
+     */
+    public function releaseAction( $id ) {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$package = $em->getRepository('RestooMainBundle:Package')->find($id);
+    	
+		if (!$package) {
+			throw $this->createNotFoundException('Unable to find Package entity.');
+		}
+		
+		try {
+			$package->release();
+			$em->persist($package);
+			$em->flush();
+		} catch (\Exception $e) {
+			//TODO handle error
+		}
+		
+		return $this->forward('RestooMainBundle:Package:overview' );
+    }
+    
+    /**
+     * cancel a released/confirmed package
+     * 
+     * @param integer $id
+     * @throws NotFoundHttpException
+     * @Route("/{id}/cancel", name="package_cancel")
+     */
+    public function cancelAction( $id ) {
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$package = $em->getRepository('RestooMainBundle:Package')->find($id);
+    	
+		if (!$package) {
+			throw $this->createNotFoundException('Unable to find Package entity.');
+		}
+		
+		try {
+			$package->cancel();
+			$em->persist($package);
+			$em->flush();
+		} catch (\Exception $e) {
+			//TODO handle error
+		}
+		
+		return $this->forward('RestooMainBundle:Package:overview' );
+    }
+    
+    /**
      * Finds and displays a Package entity.
      *
      * @Route("/{id}/show", name="package_show")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('RestooMainBundle:Package')->find($id);
@@ -74,9 +141,7 @@ class PackageController extends Controller
      * @Route("/new", name="package_new")
      * @Template()
      */
-    public function newAction()
-    {
-    	
+    public function newAction(){
         
     	$package = new Package();
         $form   = $this->createForm( new PackageType(), $package );
@@ -94,8 +159,7 @@ class PackageController extends Controller
      * @Method("post")
      * @Template("RestooMainBundle:Package:new.html.twig")
      */
-    public function createAction()
-    {
+    public function createAction(){
     	$user = $this->get('security.context')->getToken()->getUser();
         
     	$package  = new Package();
@@ -127,8 +191,7 @@ class PackageController extends Controller
      * @Route("/{id}/edit", name="package_edit")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id){
         $em = $this->getDoctrine()->getEntityManager();
 
         $entity = $em->getRepository('RestooMainBundle:Package')->find($id);

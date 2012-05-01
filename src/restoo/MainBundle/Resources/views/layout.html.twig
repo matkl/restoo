@@ -5,6 +5,7 @@
 		<link rel="shortcut icon" href="{{ asset('bundles/restoomain/images/favicon.ico') }}" />
 		<title>{% block title %}{% endblock %} - restoo</title>
 		
+	{% block stylesheets %}
 		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/reset.css') }}" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/text.css') }}" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/grid.css') }}" media="screen" />
@@ -12,6 +13,8 @@
 		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/nav.css') }}" media="screen" />
 		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/ie6.css') }}" media="screen" /><![endif]-->
 		<!--[if IE 7]><link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/ie.css') }}" media="screen" /><![endif]-->
+	{% endblock %}
+	
 	</head>
 	<body>
 		<div class="container_16">
@@ -99,15 +102,18 @@
 			
 			<div class="grid_16" id="site_info">
 				<div class="box">
-					<p>Fluid 960 Grid System, created by <a href="http://www.domain7.com/WhoWeAre/StephenBau.html">Stephen Bau</a>, based on the <a href="http://960.gs/">960 Grid System</a> by <a href="http://sonspring.com/journal/960-grid-system">Nathan Smith</a>. Released under the 
+					<p><strong>Template:</strong> <a href="http://www.designinfluences.com/fluid960gs/">Fluid 960 Grid System</a>, created by <a href="http://www.domain7.com/WhoWeAre/StephenBau.html">Stephen Bau</a>, based on the <a href="http://960.gs/">960 Grid System</a> by <a href="http://sonspring.com/journal/960-grid-system">Nathan Smith</a>. Released under the 
 		<a href="../../../licenses/GPL_license.txt">GPL</a> / <a href="../../../licenses/MIT_license.txt">MIT</a> <a href="../../../README.txt">Licenses</a>.</p>
 				</div>
 			</div>
 			<div class="clear"></div>
 		</div>
+		
+	{% block javascripts %}
 		<script type="text/javascript" src="{{ asset('bundles/restoomain/js/jquery-1.7.1.min.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('bundles/restoomain/js/jquery-ui.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('bundles/restoomain/js/jquery-fluid16.js') }}"></script>
 		<script type="text/javascript" src="{{ asset('bundles/restoomain/js/main.js') }}"></script>
+	{% endblock %}
 	</body>
 </html>

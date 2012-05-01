@@ -13,11 +13,12 @@
 	<h2><a href="#" id="toggle-forms">Edit Package</a></h2>
 	<div class="block" id="forms">
 
-	<form action="{{ path('package_create') }}" method="post" {{ form_enctype(form) }}>
-		<fieldset>
-	    	{{ form_widget(form) }}
-	        <button class="" type="submit">Create</button>
-	    </fieldset>
-	</form>
+		<form action="{{ path('package_create') }}" method="post" {{ form_enctype(form) }}>
+			<fieldset>
+		    	{{ form_widget(form) }}
+		        <button class="" type="submit">Create</button>
+		    </fieldset>
+		</form>
+	</div>
 </div>
 {% endblock %}

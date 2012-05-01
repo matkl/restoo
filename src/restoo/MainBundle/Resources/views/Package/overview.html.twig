@@ -1,85 +1,87 @@
 <table>
-				<thead>
-					<tr>
-						<th colspan="4" class="table-head">In Work</th>
-					</tr>
-					<tr>
-						<th>Title</th>
-						<th>Period</th>
-						<th>Jobs (Effort)</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-		
-				<tbody>
-				{% for package in packages %}
-					<tr>
-						<td>{{ package.title }}</td>
-						<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
-						<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
-						<td>
-							<a href="">release</a> |
-							<a href="">delete</a>
-						</td>
-					</tr>
-				{% else %}
-					<tr><td colspan="4">No packages found</td></tr>
-				{% endfor %}
-				</tbody>
-			</table>
-			
-			<table>
-				<thead>
-					<tr>
-						<th colspan="4" class="table-head">Released</th>
-					</tr>
-					<tr>
-						<th>Title</th>
-						<th>Period</th>
-						<th>Jobs (Effort)</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-		
-				<tbody>
-				{% for package in packages %}
-					<tr>
-						<td>{{ package.title }}</td>
-						<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
-						<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
-						<td>
-						</td>
-					</tr>
-				{% else %}
-					<tr><td colspan="4">No packages found</td></tr>
-				{% endfor %}
-				</tbody>
-			</table>
-			
-			<table>
-				<thead>
-					<tr>
-						<th colspan="4" class="table-head">Confirmed</th>
-					</tr>
-					<tr>
-						<th>Title</th>
-						<th>Period</th>
-						<th>Jobs (Effort)</th>
-						<th>Actions</th>
-					</tr>
-				</thead>
-		
-				<tbody>
-				{% for package in packages %}
-					<tr>
-						<td>{{ package.title }}</td>
-						<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
-						<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
-						<td>
-						</td>
-					</tr>
-				{% else %}
-					<tr><td colspan="4">No packages found</td></tr>
-				{% endfor %}
-				</tbody>
-			</table>
+	<thead>
+		<tr>
+			<th colspan="4" class="table-head">In Work</th>
+		</tr>
+		<tr>
+			<th>Title</th>
+			<th>Period</th>
+			<th>Jobs (Effort)</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+
+	<tbody>
+	{% for package in createdPackages %}
+		<tr>
+			<td><a href="{{ path( 'package_show', { 'id': package.id } ) }}">{{ package.title }}</a></td>
+			<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
+			<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
+			<td>
+				<a class="packageAction" href="{{ path( 'package_release', { 'id': package.id } ) }}">release</a> |
+				<a href="{{ path( 'package_edit', { 'id': package.id } ) }}">edit</a> |
+				<a href="">delete</a>
+			</td>
+		</tr>
+	{% else %}
+		<tr><td colspan="4">No packages found</td></tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+<table>
+	<thead>
+		<tr>
+			<th colspan="4" class="table-head">Released</th>
+		</tr>
+		<tr>
+			<th>Title</th>
+			<th>Period</th>
+			<th>Jobs (Effort)</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+
+	<tbody>
+	{% for package in releasedPackages %}
+		<tr>
+			<td><a href="{{ path( 'package_show', { 'id': package.id } ) }}">{{ package.title }}</a></td>
+			<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
+			<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
+			<td>
+				<a class="packageAction" href="{{ path( 'package_cancel', { 'id': package.id } ) }}">cancel</a> 
+			</td>
+		</tr>
+	{% else %}
+		<tr><td colspan="4">No packages found</td></tr>
+	{% endfor %}
+	</tbody>
+</table>
+
+<table>
+	<thead>
+		<tr>
+			<th colspan="4" class="table-head">Confirmed</th>
+		</tr>
+		<tr>
+			<th>Title</th>
+			<th>Period</th>
+			<th>Jobs (Effort)</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+
+	<tbody>
+	{% for package in confirmedPackages %}
+		<tr>
+			<td><a href="{{ path( 'package_show', { 'id': package.id } ) }}">{{ package.title }}</a></td>
+			<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
+			<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
+			<td>
+			</td>
+		</tr>
+	{% else %}
+		<tr><td colspan="4">No packages found</td></tr>
+	{% endfor %}
+	</tbody>
+</table>

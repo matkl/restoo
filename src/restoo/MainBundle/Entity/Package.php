@@ -79,6 +79,38 @@ class Package
 	}
 	
 	/**
+	 * releases a package
+	 * 
+	 * @throws Exception
+	 */
+	public function release() {
+		if( $this->getStatus() == self::STATUS_CREATED ) {
+			$this->setStatus( self::STATUS_RELEASED );
+		}
+		else {
+			throw new \Exception(
+				'invalid operation, package not in state "created"' );
+		}
+	}
+	
+	/**
+	 * withdraw a package
+	 * 
+	 * @throws Exception
+	 */
+	public function cancel() {
+		if( $this->getStatus() == self::STATUS_RELEASED
+			|| $this->getStatus() == self::STATUS_CONFIRMED
+		) {
+			$this->setStatus( self::STATUS_CREATED );
+		}
+		else {
+			throw new \Exception(
+				'invalid operation, package not in states "released/confirmed"' );
+		}
+	}
+	
+	/**
 	 * 
 	 * return string
 	 */
