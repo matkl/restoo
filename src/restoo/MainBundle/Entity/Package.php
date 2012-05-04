@@ -2,6 +2,8 @@
 
 namespace restoo\MainBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+
 use Doctrine\ORM\PersistentCollection;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -169,6 +171,24 @@ class Package
         return $this->endDate;
     }
 
+    public function getInterval()
+    {
+    	return $this->getStartDate()->format('Y-m-d')
+    			.'_'
+    			.$this->getEndDate()->format('Y-m-d');
+    }
+    
+    /**
+     * 
+     * @param string $interval format: 2012-01-01_2012-01-06
+     */
+    public function setInterval( $interval )
+    {
+    	$dates = explode( "_", $interval );
+    	$this->setStartDate( new \DateTime( $dates[0] ) );
+    	$this->setEndDate( new \DateTime( $dates[1] ) );
+    }
+    
     /**
      * Set status
      *
@@ -270,9 +290,9 @@ class Package
     /**
      * Set Jobs
      * 
-     * @param PersistentCollection $jobs
+     * @param Collection $jobs
      */
-    public function setJobs( PersistentCollection $jobs )
+    public function setJobs( Collection $jobs )
     {
     	foreach( $jobs as $job )
     	{

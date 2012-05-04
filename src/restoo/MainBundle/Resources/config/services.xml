@@ -4,17 +4,20 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
+	<!--
     <parameters>
-        <parameter key="restoo_main.example.class">restoo\MainBundle\Example</parameter>
+        <parameter key="restoo.packagetype.class"></parameter>
     </parameters>
-
+	-->
+	
     <services>
-        <service id="restoo_main.example" class="%restoo_main.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="restoo.packagetype" class="restoo\MainBundle\Form\PackageType">
+            <argument>%restoo.date%</argument>
         </service>
+        
+        <service id="twig.date_extension" class="restoo\MainBundle\Twig\DateExtension">
+        	<tag name="twig.extension" />
+        	<argument>%restoo.date%</argument>
+    	</service>
     </services>
-    -->
 </container>

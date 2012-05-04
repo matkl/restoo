@@ -2,6 +2,14 @@ imports:
     - { resource: parameters.ini }
     - { resource: security.yml }
 
+parameters:
+    restoo.date: 
+        interval: week  #week/month
+        format:   
+            month: M Y
+            week:  \WW Y
+            date:  Y-m-d
+
 framework:
     #esi:             ~
     #translator:      { fallback: %locale% }

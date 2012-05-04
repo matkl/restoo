@@ -5,7 +5,7 @@
 		</tr>
 		<tr>
 			<th>Title</th>
-			<th>Period</th>
+			<th>Interval</th>
 			<th>Jobs (Effort)</th>
 			<th>Actions</th>
 		</tr>
@@ -15,7 +15,7 @@
 	{% for package in createdPackages %}
 		<tr>
 			<td><a href="{{ path( 'package_show', { 'id': package.id } ) }}">{{ package.title }}</a></td>
-			<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
+			<td>{{ package.startDate|interval( package.endDate ) }}</td>
 			<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
 			<td>
 				<a class="packageAction" href="{{ path( 'package_release', { 'id': package.id } ) }}">release</a> |
@@ -36,7 +36,7 @@
 		</tr>
 		<tr>
 			<th>Title</th>
-			<th>Period</th>
+			<th>Interval</th>
 			<th>Jobs (Effort)</th>
 			<th>Actions</th>
 		</tr>
@@ -46,7 +46,7 @@
 	{% for package in releasedPackages %}
 		<tr>
 			<td><a href="{{ path( 'package_show', { 'id': package.id } ) }}">{{ package.title }}</a></td>
-			<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
+			<td>{{ package.startDate|interval( package.endDate ) }}</td>
 			<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
 			<td>
 				<a class="packageAction" href="{{ path( 'package_cancel', { 'id': package.id } ) }}">cancel</a> 
@@ -65,7 +65,7 @@
 		</tr>
 		<tr>
 			<th>Title</th>
-			<th>Period</th>
+			<th>Interval</th>
 			<th>Jobs (Effort)</th>
 			<th>Actions</th>
 		</tr>
@@ -75,7 +75,7 @@
 	{% for package in confirmedPackages %}
 		<tr>
 			<td><a href="{{ path( 'package_show', { 'id': package.id } ) }}">{{ package.title }}</a></td>
-			<td>{{ package.startDate|date("d.m.") }} - {{ package.endDate|date("d.m.") }} </td>
+			<td>{{ package.startDate|interval( package.endDate ) }}</td>
 			<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
 			<td>
 			</td>

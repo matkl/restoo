@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use restoo\MainBundle\Entity\Package;
-use restoo\MainBundle\Form\PackageType;
 
 /**
  * Package controller.
@@ -144,7 +143,7 @@ class PackageController extends Controller
     public function newAction(){
         
     	$package = new Package();
-        $form   = $this->createForm( new PackageType(), $package );
+        $form   = $this->createForm( $this->get('restoo.packagetype'), $package );
 
         return array(
             'entity' => $package,
@@ -166,7 +165,7 @@ class PackageController extends Controller
         $package->setReporter( $user );
         
         $request = $this->getRequest();
-        $form    = $this->createForm(new PackageType(), $package);
+        $form    = $this->createForm( $this->get('restoo.packagetype'), $package );
         $form->bindRequest($request);
 
         if ($form->isValid()) {
@@ -200,7 +199,7 @@ class PackageController extends Controller
             throw $this->createNotFoundException('Unable to find Package entity.');
         }
 
-        $editForm = $this->createForm(new PackageType(), $entity);
+        $editForm = $this->createForm($this->get('restoo.packagetype'), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -227,7 +226,7 @@ class PackageController extends Controller
             throw $this->createNotFoundException('Unable to find Package entity.');
         }
 
-        $editForm   = $this->createForm(new PackageType(), $entity);
+        $editForm   = $this->createForm( $this->get('restoo.packagetype'), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
