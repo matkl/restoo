@@ -14,23 +14,29 @@
 <div class="grid_6">
 	<div class="box">
 		<h2><a href="#" id="toggle-jobs">My Jobs</a></h2>
-		<div id="jobs" class="block">
+		<div id="jobs" class="block to-load" data-load="{{ path('job_overview') }}">
 		</div>
 	</div>
 	
 	<div class="box">
 		<h2><a href="#" id="toggle-team">My Team</a></h2>
-		<div id="team" class="block">
+		<div id="team" class="block to-load" data-load="{{ path('team_overview') }}">
 		</div>
 	</div>
 	
 </div>
 <div class="grid_6">
+	
+	<div class="box">
+		<h2><a href="#" id="toggle-planning">My Planning</a></h2>
+		<div id="planning" class="block to-load" data-load="{{ path('planning_overview') }}">
+		</div>
+	</div>
+		
 	<div class="box">
 		<h2><a href="#" id="toggle-packages">My Packages</a></h2>
 		<div id="packages" class="block to-load" data-load="{{ path('package_overview') }}">
 		</div>
-		<a href="{{ path( 'package_new' ) }}">Add Package</a>
 	</div>
 </div>
 <div class="grid_4">

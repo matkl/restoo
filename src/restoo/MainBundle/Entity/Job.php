@@ -8,10 +8,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * @ORM\Entity
  * @ORM\Table(name="jobs")
- * 
+ * @ORM\Entity(repositoryClass="restoo\MainBundle\Repository\JobRepository")
  */
 class Job 
 {
+	const STATUS_CREATED = 'created';
+	const STATUS_RELEASED = 'released';
+	const STATUS_REJECTED = 'rejected';
+	const STATUS_ACCEPTED = 'accepted';
+	
 	/**
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
@@ -25,12 +30,12 @@ class Job
 	protected $alias;
 	
 	/**
-	 * @ORM\Column(type="string", length=100)
+	 * @ORM\Column(type="string", length=50)
 	 */
 	protected $title;
 	
 	/**
-	 * @ORM\Column(type="string", length=100)
+	 * @ORM\Column(type="string", length=150, nullable=true)
 	 */
 	protected $description;
 	
@@ -38,6 +43,11 @@ class Job
 	 * @ORM\Column(type="float")
 	 */
 	protected $effort;
+	
+	/**
+	 * @ORM\Column(type="date", nullable=true)
+	 */
+	protected $deadline;
 	
 	/**
 	* @ORM\ManyToOne(targetEntity="User", inversedBy="jobs")
@@ -56,6 +66,11 @@ class Job
 	 * @ORM\JoinColumn(name="package_id", referencedColumnName="id")
 	 */
 	protected $package;
+
+	/**
+	 * @ORM\Column(type="string", length=20)
+	 */
+	protected $status = self::STATUS_CREATED;
 	
 	/**
 	 * @Gedmo\Timestampable(on="create")
@@ -72,6 +87,35 @@ class Job
 	public function __construct()
 	{
 			
+	}
+	
+	public function release(){
+		
+		if( $this->getStatus() == self::STATUS_CREATED ) {
+			$this->setStatus( self::STATUS_RELEASED );
+		}
+		else {
+			throw new \Exception( 'invalid operation, job not in state "created"' );
+		}
+	}
+	
+	
+	public function accept(){
+		if( $this->getStatus() == self::STATUS_RELEASED ) {
+			$this->setStatus( self::STATUS_ACCEPTED );
+		}
+		else {
+			throw new \Exception( 'invalid operation, job not in state "released"' );
+		}
+	}
+	
+	public function reject(){
+		if( $this->getStatus() == self::STATUS_RELEASED ) {
+			$this->setStatus( self::STATUS_REJECTED );
+		}
+		else {
+			throw new \Exception( 'invalid operation, job not in state "released"' );
+		}
 	}
 	
 	/**
@@ -271,5 +315,45 @@ class Job
     public function getPackage()
     {
         return $this->package;
+    }
+
+    /**
+     * Set deadline
+     *
+     * @param date $deadline
+     */
+    public function setDeadline($deadline)
+    {
+        $this->deadline = $deadline;
+    }
+
+    /**
+     * Get deadline
+     *
+     * @return date 
+     */
+    public function getDeadline()
+    {
+        return $this->deadline;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string 
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

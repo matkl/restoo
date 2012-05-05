@@ -1,0 +1,51 @@
+{% extends app.request.isXmlHttpRequest ? "RestooMainBundle::layout-ajax.html.twig" : "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Team" %}
+{% block subheadline "Team" %}
+
+{% block submenu %}
+{% endblock %}
+
+{% block content %}
+
+{% for team in teams %}
+<table>
+	<thead>
+		<tr>
+			<th colspan="6" class="table-head">planned for this week</th>
+		</tr>
+		<tr>
+			<th>{{ team.title }}</th>
+			<th>Monday</th>
+			<th>Tuesday</th>
+			<th>Wednesday</th>
+			<th>Thursday</th>
+			<th>Friday</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		{% for user in team.members %}
+		<tr>
+			<th rowspan="2">{{ user }}</th>
+			<td>1 (2h)</td>
+			<td>1 (8h)</td>
+			<td>2 (6h)</td>
+			<td>1 (2h)</td>
+			<td>X</td>
+		</tr>
+		<tr>
+			<td colspan="5">10 (24h)</td>
+		</tr>
+		{% else %}
+			<tr>
+				<td>No team members</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% else %}
+	no teams
+{% endfor %}
+<a href="#">next week</a>
+{% endblock %}

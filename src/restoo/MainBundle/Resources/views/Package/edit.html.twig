@@ -26,15 +26,15 @@
 		    
 		    <fieldset>
 		    	<legend>Jobs</legend>
-					
 		    	
-		    	<div id="package_jobs" data-prototype="{{ form_widget(edit_form.jobs.get('prototype')) | e }}"></div>
+		    	<div id="package_jobs" data-prototype="{{ form_widget(edit_form.jobs.get('prototype')) | e }}">
 		    	
 		    	{% for jobField in edit_form.jobs %}
 			        {{ form_errors(jobField) }}
 			        {{ form_widget(jobField) }}
 				{% endfor %}
 				
+				</div>
 		    </fieldset>
 		    
 		    {{ form_row(edit_form._token) }}

@@ -1,0 +1,50 @@
+{% extends app.request.isXmlHttpRequest ? "RestooMainBundle::layout-ajax.html.twig" : "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Job" %}
+{% block subheadline "Job" %}
+
+{% block submenu %}
+{% endblock %}
+
+{% block content %}
+
+<table>
+	<thead>
+		<tr>
+			<th colspan="5" class="table-head">for this week</th>
+		</tr>
+		<tr>
+			<th>Monday</th>
+			<th>Tuesday</th>
+			<th>Wednesday</th>
+			<th>Thursday</th>
+			<th>Friday</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<tr>
+			<td>
+				<ul>
+					<li>JOB 123</li>
+					<li>JOB 1</li>
+					<li>JOB 3</li>
+				</ul>
+			</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>X</td>
+		</tr>
+		<tr>
+			<td colspan="5">
+				<ul>
+					<li>JOB 123</li>
+					<li>JOB 1</li>
+					<li>JOB 3</li>
+				</ul>
+			</td>
+		</tr>
+	</tbody>
+</table>
+{% endblock %}

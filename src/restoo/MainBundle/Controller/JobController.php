@@ -16,6 +16,69 @@ use restoo\MainBundle\Form\JobType;
  */
 class JobController extends Controller
 {
+	/**
+	 *
+	 * @Route("/overview", name="job_overview")
+	 * @Template()
+	 */
+	public function overviewAction()
+	{
+		return array();
+	}
+	
+	/**
+	 *
+	 * @Route("/{id}/accept", name="job_accept")
+	 * @Template()
+	 */
+	public function acceptAction( $id )
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$entity = $em->getRepository('RestooMainBundle:Job')->find($id);
+		
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find Job entity.');
+		}
+		
+		if( $entity->getStatus() == Job::STATUS_RELEASED ) {
+			$entity->accept();
+		
+			$em->persist($entity);
+			$em->flush();
+		}
+		else {
+			//TODO throw exception
+		}
+		
+		return $this->forward('RestooMainBundle:Planning:overview' );
+	}
+	/**
+	 *
+	 * @Route("/{id}/reject", name="job_reject")
+	 * @Template()
+	 */
+	public function rejectAction( $id )
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$entity = $em->getRepository('RestooMainBundle:Job')->find($id);
+		
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find Job entity.');
+		}
+		
+		if( $entity->getStatus() == Job::STATUS_RELEASED ) {
+			$entity->reject();
+		
+			$em->persist($entity);
+			$em->flush();
+		}
+		else {
+			//TODO throw exception
+		}
+		
+		return $this->forward('RestooMainBundle:Planning:overview' );
+	}
+	
     /**
      * Lists all Job entities.
      *

@@ -9,25 +9,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 
 /**
- * Team controller.
+ * Planning controller.
  *
- * @Route("/team")
+ * @Route("/planning")
  */
-class TeamController extends Controller
+class PlanningController extends Controller
 {
 	/**
-	 * @Route("/overview", name="team_overview")
-	 * @Route("/", name="team")
-	 * @Secure(roles="ROLE_TL")
+	 * @Route("/overview", name="planning_overview")
 	 * @Template()
+	 * @Secure(roles="ROLE_TL")
 	 */
-	public function overviewAction(){
+	public function overviewAction()
+	{
 		$user = $this->get('security.context')->getToken()->getUser();
+		$jobRep = $this->getDoctrine()->getRepository('RestooMainBundle:Job');
 		
-		$teams = $this->getDoctrine()
-					  ->getRepository('RestooMainBundle:Team')
-					  ->findAll();
-		
-		return array( 'teams' => $teams );
+		$releasedJobs = $jobRep->findReleasedForTeamLeader( $user );
+		return array(
+			'releasedJobs' => $releasedJobs
+		);	
 	}
 }

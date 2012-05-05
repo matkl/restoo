@@ -1,0 +1,50 @@
+{% extends app.request.isXmlHttpRequest ? "RestooMainBundle::layout-ajax.html.twig" : "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Planning" %}
+{% block subheadline "Planning" %}
+
+{% block submenu %}
+{% endblock %}
+
+{% block content %}
+
+<table>
+	<thead>
+		<tr>
+			<th colspan="7" class="table-head">Jobs to plan</th>
+		</tr>
+		<tr>
+			<th>Alias</th>
+			<th>Title</th>
+			<th>Effort</th>
+			<th>Deadline</th>
+			<th>Interval</th>
+			<th>Receiver</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	
+	<tbody>
+	
+		{% for job in releasedJobs %}
+			<tr>
+				<td>{{ job.alias }}</td>
+				<td>{{ job.title }}</td>
+				<td>{{ job.effort }}</td>
+				<td>{{ job.deadline }}</td>
+				<td>{{ job.package.startDate|interval(job.package.endDate) }}</td>
+				<td>{{ job.receiver }}</td>
+				<td>
+					<a class="ajaxAction" href="{{ path( 'job_reject', { 'id': job.id } ) }}">reject</a> | 
+					<a class="ajaxAction" href="{{ path( 'job_accept', { 'id': job.id } ) }}">accept</a> | 
+					move
+				</td>
+			</tr>
+		{% else %}
+			<tr><td colspan="7">no jobs found</td></tr>
+		{% endfor %}
+	
+	</tbody>
+</table>
+
+{% endblock %}

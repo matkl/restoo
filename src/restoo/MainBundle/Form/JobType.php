@@ -19,6 +19,7 @@ class JobType extends AbstractType
 	        ->add('title')
     	    ->add('description')
         	->add('effort')
+        	->add('deadline')
         	->add('receiver')
         ;
     }

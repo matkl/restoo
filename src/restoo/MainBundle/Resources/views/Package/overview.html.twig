@@ -29,9 +29,9 @@
 			<td>{{ package.startDate|interval( package.endDate ) }}</td>
 			<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
 			<td>
-				<a class="packageAction" href="{{ path( 'package_release', { 'id': package.id } ) }}">release</a> |
+				<a class="ajaxAction" href="{{ path( 'package_release', { 'id': package.id } ) }}">release</a> |
 				<a href="{{ path( 'package_edit', { 'id': package.id } ) }}">edit</a> |
-				<a class="packageAction" href="{{ path( 'package_delete', { 'id': package.id } ) }}">delete</a>
+				<a class="ajaxAction" href="{{ path( 'package_delete', { 'id': package.id } ) }}">delete</a>
 			</td>
 		</tr>
 	{% else %}
@@ -60,7 +60,6 @@
 			<td>{{ package.startDate|interval( package.endDate ) }}</td>
 			<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
 			<td>
-				<a class="packageAction" href="{{ path( 'package_cancel', { 'id': package.id } ) }}">cancel</a> 
 			</td>
 		</tr>
 	{% else %}

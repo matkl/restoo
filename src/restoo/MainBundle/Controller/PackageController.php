@@ -2,6 +2,8 @@
 
 namespace restoo\MainBundle\Controller;
 
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -63,32 +65,6 @@ class PackageController extends Controller
 		
 		try {
 			$package->release();
-			$em->persist($package);
-			$em->flush();
-		} catch (\Exception $e) {
-			//TODO handle error
-		}
-		
-		return $this->forward('RestooMainBundle:Package:overview' );
-    }
-    
-    /**
-     * cancel a released/confirmed package
-     * 
-     * @param integer $id
-     * @throws NotFoundHttpException
-     * @Route("/{id}/cancel", name="package_cancel")
-     */
-    public function cancelAction( $id ) {
-    	$em = $this->getDoctrine()->getEntityManager();
-    	$package = $em->getRepository('RestooMainBundle:Package')->find($id);
-    	
-		if (!$package) {
-			throw $this->createNotFoundException('Unable to find Package entity.');
-		}
-		
-		try {
-			$package->cancel();
 			$em->persist($package);
 			$em->flush();
 		} catch (\Exception $e) {
@@ -239,6 +215,9 @@ class PackageController extends Controller
 		$entity = $em->getRepository('RestooMainBundle:Package')->find($id);
 		if (!$entity) {
 			throw $this->createNotFoundException('Unable to find Package entity.');
+		}
+		if( $entity->getStatus() != Package::STATUS_CREATED ) {
+			throw new Exception( 'not allowed to delete package if not in created state');
 		}
 
 		$em->remove($entity);
