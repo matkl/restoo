@@ -19,6 +19,7 @@ class PackageController extends Controller
 {
 	/**
 	 * @Route("/overview", name="package_overview")
+	 * @Route("/", name="package")
 	 * @Template()
 	 */
 	public function overviewAction(){
@@ -37,7 +38,6 @@ class PackageController extends Controller
 					'reporter' => $user->getId(), 
 					'status' => Package::STATUS_CONFIRMED ) );
 		
-		
 		return array(
 			'createdPackages' => $createdPackages, 
 			'releasedPackages' => $releasedPackages, 
@@ -46,20 +46,6 @@ class PackageController extends Controller
 		
 	}
 	
-    /**
-     * Lists all Package entities.
-     *
-     * @Route("/", name="package")
-     * @Template()
-     */
-    public function indexAction(){
-        $em = $this->getDoctrine()->getEntityManager();
-
-        $packages = $em->getRepository('RestooMainBundle:Package')->findAll();
-
-        return array('packages' => $packages);
-    }
-
     /**
      * finds and releases a package
      * 
@@ -127,11 +113,9 @@ class PackageController extends Controller
             throw $this->createNotFoundException('Unable to find Package entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),        );
+            'entity'      => $entity );
     }
 
     /**
@@ -174,7 +158,7 @@ class PackageController extends Controller
             $em->persist($package);
             $em->flush();
 
-            return $this->redirect( $this->generateUrl('package_show', array('id' => $package->getId())));
+            return $this->redirect( $this->generateUrl('package_edit', array('id' => $package->getId())));
             
         }
 
@@ -200,12 +184,10 @@ class PackageController extends Controller
         }
 
         $editForm = $this->createForm($this->get('restoo.packagetype'), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -227,7 +209,6 @@ class PackageController extends Controller
         }
 
         $editForm   = $this->createForm( $this->get('restoo.packagetype'), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         $request = $this->getRequest();
 
@@ -244,7 +225,6 @@ class PackageController extends Controller
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -252,35 +232,18 @@ class PackageController extends Controller
      * Deletes a Package entity.
      *
      * @Route("/{id}/delete", name="package_delete")
-     * @Method("post")
      */
     public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
+		$em = $this->getDoctrine()->getEntityManager();
+		$entity = $em->getRepository('RestooMainBundle:Package')->find($id);
+		if (!$entity) {
+			throw $this->createNotFoundException('Unable to find Package entity.');
+		}
 
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('RestooMainBundle:Package')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Package entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
+		$em->remove($entity);
+        $em->flush();
 
         return $this->redirect($this->generateUrl('package'));
-    }
-
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
     }
 }

@@ -14,9 +14,19 @@
 	<div class="block" id="forms">
 
 		<form action="{{ path('package_create') }}" method="post" {{ form_enctype(form) }}>
-			<fieldset>
-		    	{{ form_widget(form) }}
-		        <button class="" type="submit">Create</button>
+			
+			{{ form_errors(form) }}
+		    <fieldset>
+		    	<legend>Properties</legend>
+				{{ form_row(form.title) }}
+	    		{{ form_row(form.interval) }}
+		    	
+		    	 {{ form_row(form._token) }}
+		        
+		    </fieldset>
+		    
+		    <fieldset>
+		    	<button class="" type="submit">Create</button>
 		    </fieldset>
 		</form>
 	</div>

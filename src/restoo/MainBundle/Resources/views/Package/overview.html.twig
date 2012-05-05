@@ -1,3 +1,14 @@
+{% extends app.request.isXmlHttpRequest ? "RestooMainBundle::layout-ajax.html.twig" : "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Package" %}
+{% block subheadline "Package" %}
+
+{% block submenu %}
+	{% include 'RestooMainBundle:Package:submenu.html.twig' %}
+{% endblock %}
+
+{% block content %}
+
 <table>
 	<thead>
 		<tr>
@@ -20,7 +31,7 @@
 			<td>
 				<a class="packageAction" href="{{ path( 'package_release', { 'id': package.id } ) }}">release</a> |
 				<a href="{{ path( 'package_edit', { 'id': package.id } ) }}">edit</a> |
-				<a href="">delete</a>
+				<a class="packageAction" href="{{ path( 'package_delete', { 'id': package.id } ) }}">delete</a>
 			</td>
 		</tr>
 	{% else %}
@@ -85,3 +96,4 @@
 	{% endfor %}
 	</tbody>
 </table>
+{% endblock %}

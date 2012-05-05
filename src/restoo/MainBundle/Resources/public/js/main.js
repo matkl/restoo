@@ -10,8 +10,8 @@ function initializeEmbedForms() {
 	    $(this).find("> div").append('<a href="#" class="deleteElement">Delete element</a></li>');
 	});
 	//add click handler
-	$('a.deleteElement').click(removeFormCollectionElement);
-	$('a.addElement').click(addFormCollectionElement);
+	$('.deleteElement').click(removeFormCollectionElement);
+	$('.addElement').click(addFormCollectionElement);
 }
 
 function removeFormCollectionElement(event) {

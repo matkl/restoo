@@ -23,39 +23,26 @@
 	    		{{ form_row(edit_form.interval) }}
 
 		    </fieldset>
+		    
 		    <fieldset>
 		    	<legend>Jobs</legend>
+					
 		    	
-		    	<div id="package_jobs" data-prototype="{{ form_widget(edit_form.jobs.get('prototype')) | e }}">
+		    	<div id="package_jobs" data-prototype="{{ form_widget(edit_form.jobs.get('prototype')) | e }}"></div>
 		    	
 		    	{% for jobField in edit_form.jobs %}
 			        {{ form_errors(jobField) }}
 			        {{ form_widget(jobField) }}
 				{% endfor %}
 				
-		    	
 		    </fieldset>
 		    
 		    {{ form_row(edit_form._token) }}
 		    
-			<hr />
-			<ul class="record_actions">
-			    <li>
-			        <a href="{{ path('package') }}">Back to the list</a>
-			    </li>
-			    <li>
-			    	<a href="#" class="addElement">Add Job</a>
-			    </li>
-			    <li>
-			        <form action="{{ path('package_delete', { 'id': entity.id }) }}" method="post">
-			            {{ form_widget(delete_form) }}
-			            <button type="submit">Delete</button>
-			        </form>
-			    </li>
-			    <li>
-			    	<button type="submit">Save</button>
-			    </li>
-			</ul>
+		    <fieldset>
+	    		<button type="submit">Save</button>
+	    		<button class="addElement">Add Job</button>
+	    	</fieldset>
 		</form>
 	</div>
 </div>

@@ -11,8 +11,6 @@
 
 {% block body %}
 
-
-
 <div class="grid_6">
 	<div class="box">
 		<h2><a href="#" id="toggle-jobs">My Jobs</a></h2>
@@ -30,8 +28,7 @@
 <div class="grid_6">
 	<div class="box">
 		<h2><a href="#" id="toggle-packages">My Packages</a></h2>
-		<div id="packages" class="block">
-			{% render "RestooMainBundle:Package:overview" %}
+		<div id="packages" class="block to-load" data-load="{{ path('package_overview') }}">
 		</div>
 		<a href="{{ path( 'package_new' ) }}">Add Package</a>
 	</div>

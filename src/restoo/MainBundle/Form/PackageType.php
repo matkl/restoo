@@ -36,7 +36,7 @@ class PackageType extends AbstractType
         $builder
             ->add('title')
             ->add('interval', 'choice', array(
-            			'choices' => $this->createIntervalValues()
+            			'choices' => $this->createIntervalValues(),
             ))
         	->add('jobs', 'collection', array(	
         				'type' => new JobType(),
