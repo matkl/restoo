@@ -8,11 +8,24 @@
 {% endblock %}
 
 {% block content %}
-	<form action="" method="post" >
-	    {{ form_widget(form) }}
+<div class="box">
+	<h2><a href="#" id="toggle-forms">Edit team</a></h2>
+	<div class="block" id="forms">
+		<form action="" method="post" >
+			{{ form_errors(form) }}
+			<fieldset>
+				<legend>Properties</legend>
+				{{ form_row(form.title) }}
+				{{ form_row(form.leader) }}
+				{{ form_row(form.members) }}
+			</fieldset>
 	
-	    <input type="submit" />
-	</form>    
+			<fieldset>
+				<input type="submit" />
+			</fieldset>
+		</form>
+	</div>
+</div>
 {% endblock %}
 
 {% block sidebar %}
