@@ -319,6 +319,7 @@ fieldset p {
 	margin-top:0pt;
 }
 fieldset div label {
+	clear:both;
 	float:left;
 	line-height:2em;
 	margin-right:3%;
