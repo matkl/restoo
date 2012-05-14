@@ -4,17 +4,30 @@
 * fork and clone repository
 * copy app/config/parameters.ini.dist to parameters.ini and adjust params
 * install Vendor-Bundles: php bin/vendors install
+* install the StofDoctrineExtensionBundle: https://github.com/stof/StofDoctrineExtensionsBundle
 * setup your webserver, document-root: web/
 * check config and fix the mentioned problems: http://myhost/config.php
 * install assets: $ php app/console assets:install web
 * create database: $ php app/console doctrine:database:create
 * create tables: $ php app/console doctrine:schema:create
 
-=== User-Roles ===
+=== User-Setup ===
+This steps will be replaced by an installation script
 <pre>
+//--CREATE GROUPS
 INSERT INTO groups (name,role) VALUES
 	('user','ROLE_USER'),
 	('admin','ROLE_ADMIN'),
 	('project manager','ROLE_PM'),
 	('team leader','ROLE_TL');
+
+//---CREATE USER (usr: admin, pwd: admin)
+INSERT INTO users 
+	(username, password, salt, firstname, lastname, email )
+VALUES 
+( "admin", "30+iRO7lg7KE4pCMG3MDub33o53aUBc+ZXuatUhAO4W9HYEYy/lda58CDeBs/o6hFI88wJQ5VBrQqp5wrtthTw==", "dbe958338521f61364cb4585579dd1e3ee190cfd", "Admin", "User", "mail@example.org" );
+
+//---MAKE USER ADMIN
+INSERT INTO user_group ( user_id, group_id ) 
+VALUES ( (SELECT id FROM users WHERE username = "admin"), (SELECT id FROM groups WHERE name= "admin") );
 </pre>
