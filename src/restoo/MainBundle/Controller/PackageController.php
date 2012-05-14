@@ -2,6 +2,8 @@
 
 namespace restoo\MainBundle\Controller;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
 use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -217,7 +219,12 @@ class PackageController extends Controller
 			throw $this->createNotFoundException('Unable to find Package entity.');
 		}
 		if( $entity->getStatus() != Package::STATUS_CREATED ) {
-			throw new Exception( 'not allowed to delete package if not in created state');
+			throw new \Exception( 'not allowed to delete package if not in created state');
+		}
+		
+		$user = $this->get('security.context')->getToken()->getUser();
+		if ( $user != $entity->getReporter() ) {
+			throw new AccessDeniedException('not creator of package');
 		}
 
 		$em->remove($entity);
