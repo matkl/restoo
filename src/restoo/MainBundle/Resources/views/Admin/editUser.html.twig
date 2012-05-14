@@ -8,11 +8,28 @@
 {% endblock %}
 
 {% block content %}
-	<form action="{{ path('admin_user_edit', { 'id': user.id } ) }}" method="post" >
-	    {{ form_widget(form) }}
-	
-	    <input type="submit" />
-	</form>    
+<div class="box">
+	<h2><a href="#" id="toggle-forms">Edit user</a></h2>
+	<div class="block" id="forms">
+		<form action="{{ path('admin_user_edit', { 'id': user.id } ) }}" method="post" >
+			{{ form_errors(form) }}
+			<fieldset>
+				<legend>Properties</legend>
+				{{ form_row(form.username) }}
+				{{ form_row(form.firstname) }}
+				{{ form_row(form.lastname) }}
+				{{ form_row(form.email) }}
+				{{ form_row(form.password) }}
+				{{ form_row(form.groups) }}
+				{{ form_row(form.team) }}
+				{{ form_rest(form) }}
+			</fieldset>
+			<fieldset>		
+		    	<input type="submit" />
+			</fieldset>
+		</form>
+	</div>
+</div>
 {% endblock %}
 
 {% block sidebar %}

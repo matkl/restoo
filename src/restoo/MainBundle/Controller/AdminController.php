@@ -52,17 +52,33 @@ class AdminController extends Controller
 		$user = $this->getDoctrine()
 				->getRepository('RestooMainBundle:User')
 				->find( $id );
-		
 		//@todo add error handling for invalid/unknown user-id
-		$form = $this->createForm( new UserType(), $user );
+		$form = $this->createForm( new UserType( false ), $user );
 		
 		$request = $this->getRequest();
 		if ($request->getMethod() == 'POST') 
 		{
-			//@todo add handling for password (overwrite or hide)
+			// save old password to recover it if the password from the form is empty
+			$oldPassword = $user->getPassword();
 			$form->bindRequest( $request );
 			if ($form->isValid())
 			{
+				if( $user->getPassword() != NULL)
+				{
+					// hash & salt the submitted password
+					$factory = $this->get( 'security.encoder_factory' );
+					$encoder = $factory->getEncoder( $user );
+					$password = $user->getPassword();
+					
+					$encodedPassword = $encoder->encodePassword(
+							$user->getPassword(), $user->getSalt() );
+					$user->setPassword( $encodedPassword );
+					
+				} else 
+				{
+					$user->setPassword( $oldPassword );
+				}
+				
 				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist( $form->getData() );
 				$em->flush();
