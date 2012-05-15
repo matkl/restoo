@@ -8,25 +8,25 @@
 {% endblock %}
 
 {% block content %}
-
-<form action="{{ path('job_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Edit</button>
-    </p>
-</form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('job') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('job_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
-    </li>
-</ul>
+<div class="box">
+	<h2><a href="#" id="toggle-forms">Edit job</a></h2>
+	<div class="block" id="forms">
+		<form action="{{ path('job_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+			{{ form_errors(edit_form) }}
+			<fieldset>
+				<legend>Properties</legend>
+				{{ form_row(edit_form.alias) }}
+				{{ form_row(edit_form.title) }}
+				{{ form_row(edit_form.description) }}
+				{{ form_row(edit_form.effort) }}
+				{{ form_row(edit_form.deadline) }}
+				{{ form_row(edit_form.receiver) }}
+				{{ form_rest(edit_form) }}
+			</fieldset>
+			<fieldset>
+				<button type="submit">Edit</button>
+			</fieldset>
+		</form>
+	</div> 
+</div>
 {% endblock %}

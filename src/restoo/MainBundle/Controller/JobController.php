@@ -231,27 +231,18 @@ class JobController extends Controller
      * Deletes a Job entity.
      *
      * @Route("/{id}/delete", name="job_delete")
-     * @Method("post")
      */
     public function deleteAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $request = $this->getRequest();
-
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getEntityManager();
-            $entity = $em->getRepository('RestooMainBundle:Job')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Job entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
-        }
-
+    	$em = $this->getDoctrine()->getEntityManager();
+    	$entity = $em->getRepository('RestooMainBundle:Job')->find($id);
+    	if (!$entity) {
+    		throw $this->createNotFoundException('Unable to find Job entity.');
+    	}
+    	
+    	$em->remove($entity);
+    	$em->flush();
+    	
         return $this->redirect($this->generateUrl('job'));
     }
 
