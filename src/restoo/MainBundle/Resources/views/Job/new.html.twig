@@ -8,20 +8,25 @@
 {% endblock %}
 
 {% block content %}
-
-<h1>Job edit</h1>
-<form action="{{ path('job_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit">Create</button>
-    </p>
-</form>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('job') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+<div class="box">
+	<h2><a href="#" id="toggle-forms">New job</a></h2>
+	<div class="block" id="forms">
+		<form action="{{ path('job_create') }}" method="post" {{ form_enctype(form) }}>
+			{{ form_errors(form) }}
+			<fieldset>
+				<legend>Properties</legend>
+				{{ form_row(form.alias) }}
+				{{ form_row(form.title) }}
+				{{ form_row(form.description) }}
+				{{ form_row(form.effort) }}
+				{{ form_row(form.deadline) }}
+				{{ form_row(form.receiver) }}
+				{{ form_rest(form) }}
+			</fieldset>
+			<fieldset>
+				<button type="submit">Create</button>
+			</fieldset>
+		</form>
+	</div>
+</div>
 {% endblock %}

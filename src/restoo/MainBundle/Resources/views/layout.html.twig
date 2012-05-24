@@ -7,10 +7,11 @@
 		
 	{% block stylesheets %}
 		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/reset.css') }}" media="screen" />
-		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/text.css') }}" media="screen" />
+ 		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/text.css') }}" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/grid.css') }}" media="screen" />
-		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/layout.css') }}" media="screen" />
+ 		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/layout.css') }}" media="screen" />
 		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/nav.css') }}" media="screen" />
+		<link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/smoothness/jquery-ui-1.8.20.custom.css') }}" media="screen" />
 		<!--[if IE 6]><link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/ie6.css') }}" media="screen" /><![endif]-->
 		<!--[if IE 7]><link rel="stylesheet" type="text/css" href="{{ asset('bundles/restoomain/css/ie.css') }}" media="screen" /><![endif]-->
 	{% endblock %}
@@ -111,9 +112,9 @@
 		
 	{% block javascripts %}
 		<script type="text/javascript" src="{{ asset('bundles/restoomain/js/jquery-1.7.1.min.js') }}"></script>
-		<script type="text/javascript" src="{{ asset('bundles/restoomain/js/jquery-ui.js') }}"></script>
-		<script type="text/javascript" src="{{ asset('bundles/restoomain/js/jquery-fluid16.js') }}"></script>
-		<script type="text/javascript" src="{{ asset('bundles/restoomain/js/main.js') }}"></script>
+ 		<script type="text/javascript" src="{{ asset('bundles/restoomain/js/jquery-ui-1.8.20.custom.min.js') }}"></script>
+ 		<script type="text/javascript" src="{{ asset('bundles/restoomain/js/jquery-fluid16.js') }}"></script>
+ 		<script type="text/javascript" src="{{ asset('bundles/restoomain/js/main.js') }}"></script>
 	{% endblock %}
 	</body>
 </html>

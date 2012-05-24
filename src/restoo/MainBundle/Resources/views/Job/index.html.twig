@@ -33,14 +33,10 @@
             <td>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>{% if entity.updated %}{{ entity.updated|date('Y-m-d H:i:s') }}{% endif%}</td>
             <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('job_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('job_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+            	<ul>
+            		<li><a href="{{ path('job_edit', { 'id': entity.id }) }}">edit</a></li> 
+					<li><a href="{{ path('job_delete', { 'id': entity.id }) }}">delete</a></li>
+            	</ul>
             </td>
         </tr>
     {% endfor %}
