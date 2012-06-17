@@ -8,46 +8,58 @@
 {% endblock %}
 
 {% block content %}
-
-<table class="record_properties">
-    <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ entity.id }}</td>
-        </tr>
-        <tr>
-            <th>Startdate</th>
-            <td>{{ entity.startDate|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Enddate</th>
-            <td>{{ entity.endDate|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Status</th>
-            <td>{{ entity.status }}</td>
-        </tr>
-        <tr>
-            <th>Created</th>
-            <td>{{ entity.created|date('Y-m-d H:i:s') }}</td>
-        </tr>
-        <tr>
-            <th>Updated</th>
-            <td>{{ entity.updated|date('Y-m-d H:i:s') }}</td>
-        </tr>
-    </tbody>
-</table>
-
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('package') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('package_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-</ul>
+<div class="box">
+	<h2><a href="#" id="toggle-forms">Show Package</a></h2>
+	<div class="block" id="forms">
+		<table>
+			<thead>
+				<tr>
+					<th colspan="2" class="table-head">Properties</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>Title</th>
+					<td>{{ package.title }}</td>
+				</tr>
+				<tr>
+					<th>Interval</th>
+					<td>{{ package.startDate|interval( package.endDate ) }}</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<table>
+			<thead>
+				<tr>
+					<th colspan="6" class="table-head">Jobs</th>
+				</tr>
+				<tr>
+					<th>Alias</th>
+					<th>Title</th>
+					<th>Effort</th>
+					<th>Deadline</th>
+					<th>Receiver</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+	
+			<tbody>
+			{% for job in package.jobs %}
+				<tr>
+					<td>{{ job.alias }}</td>
+					<td>{{ job.title }}</td>
+					<td>{{ job.effort }}</td>
+					<td>{{ job.deadline }}</td>
+					<td>{{ job.receiver }}</td>
+					<td>{{ job.status }}</td>
+				</tr>
+			{% else %}
+				<tr><td colspan="6">No job found</td></tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		
+	</div>
+</div>
 {% endblock %}

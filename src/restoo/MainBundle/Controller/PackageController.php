@@ -85,15 +85,14 @@ class PackageController extends Controller
     public function showAction($id) {
         $em = $this->getDoctrine()->getEntityManager();
 
-        $entity = $em->getRepository('RestooMainBundle:Package')->find($id);
+        $package = $em->getRepository('RestooMainBundle:Package')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Package entity.');
+        if (!$package) {
+            throw $this->createNotFoundException('Unable to find Package.');
         }
 
-
         return array(
-            'entity'      => $entity );
+            'package'      => $package );
     }
 
     /**

@@ -88,6 +88,7 @@
 			<td>{{ package.startDate|interval( package.endDate ) }}</td>
 			<td>{{ package.jobs|length }} ({{ package.effort }} h)</td>
 			<td>
+				<a href="{{ path( 'package_show', { 'id': package.id } ) }}">show</a>
 			</td>
 		</tr>
 	{% else %}
