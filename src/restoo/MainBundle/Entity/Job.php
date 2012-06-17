@@ -103,6 +103,7 @@ class Job
 	public function accept(){
 		if( $this->getStatus() == self::STATUS_RELEASED ) {
 			$this->setStatus( self::STATUS_ACCEPTED );
+			$this->getPackage()->update();
 		}
 		else {
 			throw new \Exception( 'invalid operation, job not in state "released"' );
@@ -112,6 +113,7 @@ class Job
 	public function reject(){
 		if( $this->getStatus() == self::STATUS_RELEASED ) {
 			$this->setStatus( self::STATUS_REJECTED );
+			$this->getPackage()->update();
 		}
 		else {
 			throw new \Exception( 'invalid operation, job not in state "released"' );
@@ -355,5 +357,23 @@ class Job
     public function getStatus()
     {
         return $this->status;
+    }
+    
+    /**
+     * true if this job was rejected
+     * 
+     * @return boolean
+     */
+    public function isRejected(){
+    	return ( $this->getStatus() == self::STATUS_REJECTED );
+    }
+    
+    /**
+     * true if this job was accepted
+     *  
+     * @return boolean
+     */
+    public function isAccepted(){
+    	return ( $this->getStatus() == self::STATUS_ACCEPTED );
     }
 }

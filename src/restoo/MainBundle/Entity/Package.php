@@ -99,6 +99,28 @@ class Package
 	}
 	
 	/**
+	 * updates this package by checking related entries
+	 * 
+	 * @return void
+	 */
+	public function update(){
+
+		//--- check if this package is confirmed
+		$confirmed = true;
+		foreach( $this->getJobs() as $job ){
+			
+			if( $job->isRejected() === false 
+				|| $job->isAccepted() === false
+			){
+				$confirmed = false;
+				break;
+			}
+		}
+		
+		$this->setStatus( self::STATUS_CONFIRMED );
+	}
+	
+	/**
 	 * 
 	 * return string
 	 */
