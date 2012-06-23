@@ -5,25 +5,33 @@
 		<tr>
 			<th>Alias</th>
 			<th>Title</th>
-			<th>Effort</th>
 			<th>Deadline</th>
 			<th>Receiver</th>
 			<th>Reporter</th>
+			<th>Effort</th>
 		</tr>
 	</thead>
 	<tbody>
+		{% set totalEffort = 0 %}
 		{% for job in jobs %}
+			{% set totalEffort = totalEffort + job.effort %}
 			<tr>
 				<td>{{ job.alias }}</td>
 				<td>{{ job.title }}</td>
-				<td>{{ job.effort }}</td>
 				<td>{{ job.deadline }}</td>
 				<td>{{ job.receiver }}</td>
 				<td>{{ job.reporter }}</td>
+				<td>{{ job.effort }}</td>
 			</tr>
 		{% else %}
 		<tr><th colspan="6">No jobs found</th></tr>
 		{% endfor %}
 	</tbody>
+	<tfoot>
+		<tr class="total">
+			<th colspan="5"></th>
+			<th>{{ totalEffort }}</th>
+		</tr>
+	</tfoot>
 
 </table>

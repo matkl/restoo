@@ -14,7 +14,9 @@
 <div class="grid_6">
 	<div class="box">
 		<h2><a href="#" id="toggle-jobs">My Jobs</a></h2>
-		<div id="jobs" class="block to-load" data-load="{{ path('job_overview') }}">
+		<div id="jobs" class="block to-load" data-load="{{ path('planning_week', { 'week': "now"|date("W") } ) }}">
+		</div>
+		<div id="jobs" class="block to-load" data-load="{{ path('planning_week', { 'week': "next week"|date("W") } ) }}">
 		</div>
 	</div>
 	
