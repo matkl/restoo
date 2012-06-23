@@ -57,6 +57,8 @@ class PackageType extends AbstractType
     
     /**
      * generates array for the period dropdown
+     * 
+     * @TODO move this into DateService
      *  
      * @throws InvalidArgumentException
      * @return array

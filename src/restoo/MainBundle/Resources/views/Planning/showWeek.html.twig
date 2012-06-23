@@ -1,0 +1,13 @@
+{% extends app.request.isXmlHttpRequest ? "RestooMainBundle::layout-ajax.html.twig" : "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Week" %}
+{% block subheadline "Jobs for week "~week %}
+
+{% block submenu %}
+{% endblock %}
+
+{% block content %}
+
+{% include "RestooMainBundle:Job:table.html.twig" with { 'jobs': jobs, 'headline': 'jobs for W'~week } %}
+
+{% endblock %}

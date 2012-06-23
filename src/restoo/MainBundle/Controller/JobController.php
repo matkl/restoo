@@ -116,7 +116,7 @@ class JobController extends Controller
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        );
     }
-
+    
     /**
      * Displays a form to create a new Job entity.
      *

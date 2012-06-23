@@ -11,6 +11,11 @@
 	-->
 	
     <services>
+    	
+    	<service id="restoo.date_service" class="restoo\MainBundle\Service\DateService">
+    		<argument>%restoo.date%</argument>
+    	</service>
+    
         <service id="restoo.packagetype" class="restoo\MainBundle\Form\PackageType">
             <argument>%restoo.date%</argument>
         </service>

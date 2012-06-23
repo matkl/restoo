@@ -15,6 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * 
  * @ORM\Entity
  * @ORM\Table(name="packages")
+ * @ORM\Entity(repositoryClass="restoo\MainBundle\Repository\PackageRepository")
  */
 class Package 
 {

@@ -28,37 +28,8 @@
 				</tr>
 			</tbody>
 		</table>
-		
-		<table>
-			<thead>
-				<tr>
-					<th colspan="6" class="table-head">Jobs</th>
-				</tr>
-				<tr>
-					<th>Alias</th>
-					<th>Title</th>
-					<th>Effort</th>
-					<th>Deadline</th>
-					<th>Receiver</th>
-					<th>Status</th>
-				</tr>
-			</thead>
-	
-			<tbody>
-			{% for job in package.jobs %}
-				<tr>
-					<td>{{ job.alias }}</td>
-					<td>{{ job.title }}</td>
-					<td>{{ job.effort }}</td>
-					<td>{{ job.deadline }}</td>
-					<td>{{ job.receiver }}</td>
-					<td>{{ job.status }}</td>
-				</tr>
-			{% else %}
-				<tr><td colspan="6">No job found</td></tr>
-			{% endfor %}
-			</tbody>
-		</table>
+
+		{% include "RestooMainBundle:Job:table.html.twig" with { 'jobs': package.jobs, 'headline': 'Jobs' } %}
 		
 	</div>
 </div>
