@@ -109,16 +109,17 @@ class Package
 		//--- check if this package is confirmed
 		$confirmed = true;
 		foreach( $this->getJobs() as $job ){
-			
 			if( $job->isRejected() === false 
-				|| $job->isAccepted() === false
+				&& $job->isAccepted() === false
 			){
 				$confirmed = false;
 				break;
 			}
 		}
 		
-		$this->setStatus( self::STATUS_CONFIRMED );
+		if( $confirmed ) {
+			$this->setStatus( self::STATUS_CONFIRMED );
+		}
 	}
 	
 	/**
