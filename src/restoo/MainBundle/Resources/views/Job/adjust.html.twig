@@ -1,0 +1,28 @@
+{% extends app.request.isXmlHttpRequest ? "RestooMainBundle::layout-ajax.html.twig" : "RestooMainBundle::layout.html.twig" %}
+
+{% block title "Adjust job" %}
+{% block subheadline "Adjust job" %}
+
+{% block submenu %}
+{% endblock %}
+
+{% block content %}
+<div class="box">
+	<h2><a href="#" id="toggle-forms">Adjust job</a></h2>
+	<div class="block" id="forms">
+		<form action="{{ path('job_adjust', { 'id': job.id }) }}" method="post" {{ form_enctype(form) }}>
+			{{ form_errors(form) }}
+			<fieldset>
+				<legend>Properties</legend>
+				{{ form_row(form.receiver) }}
+				{{ form_row(form.effort) }}
+				{{ form_rest(form) }}
+			</fieldset>
+	
+			<fieldset>
+				<input type="submit" value="save" />
+			</fieldset>
+		</form>
+	</div>
+</div>
+{% endblock %}

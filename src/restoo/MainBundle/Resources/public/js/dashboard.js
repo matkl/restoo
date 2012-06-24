@@ -6,7 +6,24 @@ $(document).ready( function(){
 		url = $(element).attr('data-load');
 		$(element).load( url );
 	});
+	
+	$('a.popupAction').live('click', openPopup );
 });
+
+function openPopup() {
+	var $this = $(this);
+	var outputHolder = $("<div id='.popupConent'></div>");
+	$("body").append(outputHolder);
+		outputHolder.load($this.attr("href"), null, function() {
+			outputHolder.dialog( {
+					modal: true,
+					close: function(event, ui) {
+						//@TODO refresh dashboard
+					}
+			});
+		});
+	return false;
+}
 
 function handlePlanningAction( event ) {
 	var url = $(this).attr('href');

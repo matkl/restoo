@@ -2,6 +2,8 @@
 
 namespace restoo\MainBundle\Controller;
 
+use restoo\MainBundle\Form\JobAdjustType;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -77,6 +79,35 @@ class JobController extends Controller
 		}
 		
 		return $this->forward('RestooMainBundle:Planning:overview' );
+	}
+	
+	/**
+	 *
+	 * @Route("/{id}/adjust", name="job_adjust")
+	 * @Template()
+	 */
+	public function adjustAction( $id )
+	{
+		$em = $this->getDoctrine()->getEntityManager();
+		$job = $em->getRepository('RestooMainBundle:Job')->find($id);
+		
+		if (!$job) {
+			throw $this->createNotFoundException('Unable to find Job entity.');
+		}
+		$form = $this->createForm( new JobAdjustType(), $job );
+		
+		if ($this->getRequest()->getMethod() == 'POST'){
+			$form->bindRequest( $this->getRequest() );
+			if ($form->isValid()) {
+				$em->persist($job);
+				$em->flush();
+			}
+		}
+		
+		return array(
+					'form' => $form->createView(),
+					'job' => $job,
+				);
 	}
 	
     /**

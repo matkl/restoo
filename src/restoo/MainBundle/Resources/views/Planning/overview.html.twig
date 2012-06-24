@@ -37,7 +37,7 @@
 				<td>
 					<a class="ajaxAction" href="{{ path( 'job_reject', { 'id': job.id } ) }}">reject</a> | 
 					<a class="ajaxAction" href="{{ path( 'job_accept', { 'id': job.id } ) }}">accept</a> | 
-					move
+					<a class="popupAction" href="{{ path( 'job_adjust', { 'id': job.id } ) }}">adjust</a>
 				</td>
 			</tr>
 		{% else %}
